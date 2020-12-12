@@ -122,7 +122,7 @@
 ]]></content>
   </entry>
   <entry>
-    <title>2019]PHP</title>
+    <title>web-1 buuoj[极客大挑战 2019]PHP1</title>
     <url>/2020/12/12/Web-1%20buuoj%5B%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98%202019%5DPHP/</url>
     <content><![CDATA[<h2 id="buuoj-极客大挑战-2019-PHP1"><a href="#buuoj-极客大挑战-2019-PHP1" class="headerlink" title="buuoj[极客大挑战 2019]PHP1"></a>buuoj[极客大挑战 2019]PHP1</h2><blockquote>
 <ul>
@@ -131,8 +131,12 @@
 <li><h4 id="get的新姿势"><a href="#get的新姿势" class="headerlink" title="get的新姿势"></a>get的新姿势</h4></li>
 </ul>
 </blockquote>
+<a id="more"></a>
+
 <ul>
-<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3></li>
+</ul>
+<ol>
 <li><p>拿到网页，没有输入框，注入暴力算是无了？</p>
 </li>
 <li><p>f12瞅一下，没什么有用的东西。</p>
@@ -142,7 +146,7 @@
 <li><p>解压得到一个假的flag.php，但得到的index.php和class.php是有用的，根据其中的提示判定应该是个PHP反序列化漏洞，那么这要构造相应的字符串就搞定了。</p>
 </li>
 </ol>
-</li>
+<ul>
 <li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><h4 id="1-dirsearch的安装和使用"><a href="#1-dirsearch的安装和使用" class="headerlink" title="1. dirsearch的安装和使用"></a>1. dirsearch的安装和使用</h4><p> <del>原来这玩意在windows下装完就能用了。</del></p>
 <p> cmd切到dirsearch所在的目录，然后运行命令</p>
 <p><code>py dirsearch.py -u (题目连接) -s 3</code></p>
@@ -201,6 +205,32 @@
 </li>
 </ol>
 </li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>web-2 buuoj[极客大挑战 2019]Http1</title>
+    <url>/2020/12/12/web-2/</url>
+    <content><![CDATA[<h2 id="buuoj-极客大挑战-2019-Http1"><a href="#buuoj-极客大挑战-2019-Http1" class="headerlink" title="buuoj[极客大挑战 2019]Http1"></a>buuoj[极客大挑战 2019]Http1</h2><blockquote>
+<ul>
+<li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
+<li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
+<li><h4 id="get的新姿势"><a href="#get的新姿势" class="headerlink" title="get的新姿势"></a>get的新姿势</h4></li>
+</ul>
+</blockquote>
+<a id="more"></a>
+
+<ul>
+<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3></li>
+</ul>
+<ol>
+<li>是个很正经的网页，f12搜一下源码，没什么明显的提示信息。</li>
+<li>dirsearch扫一扫也没什么有用的东西。</li>
+<li>题目提示HTTP，burpsuite截个包，发现相应里提示Secret.php。</li>
+<li>根据网页提示修改HTTP请求头访问，最后得到flag。</li>
+</ol>
+<ul>
+<li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3></li>
 </ul>
 ]]></content>
   </entry>
