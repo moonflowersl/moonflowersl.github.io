@@ -16,7 +16,7 @@
 <li><h4 id="不说人话？"><a href="#不说人话？" class="headerlink" title="不说人话？"></a>不说人话？</h4></li>
 </ul>
 <p>下载，解压，得到一个不知道是啥的文件，根据Misc解题法则，管他是什么先拖进16进制编辑器里look look，然后就发现一个五角星</p>
-<p><img src="D:\blog\moonflowersl\source\images\不说人话1.png"></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/%E4%B8%8D%E8%AF%B4%E4%BA%BA%E8%AF%9D1.png?raw=true"></p>
 <p>（然而好像并没有）什么卵用……</p>
 <p>再观察一下发现出现的字符只有’&gt;’, ‘&lt;’, ‘+’, ‘-‘, ‘.’几种，那这大概就是Brainfuck或Ook！了（**brainfuck**又被称为**brainf**k**或者**BF**，**brainfuck**语言用**&gt; &lt; + - . , [ ]**八种符号来替换C语言的各种语法和命令）。</p>
 <p>百度一个<a href="https://www.splitbrain.org/services/ook">在线解密网站 </a> 复制粘贴解出flag。</p>
@@ -80,13 +80,13 @@
 </ul>
 <p>拿到题目先玩会（说不定就有flag了呢），然而玩了几千分也没见什么异常，旁边三个连接点了点也没得到什么有用的东西（出题人总不能把flag藏在人家的GitHub项目里面吧）。</p>
 <p>按照web套路，F12看源码，network刷新一下看看包</p>
-<p><img src="D:/blog/moonflowersl/source/_posts/阴间2048.png"></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/%E9%98%B4%E9%97%B42048.png?raw=true"></p>
 <p>哦？发现了一个别致的小东西</p>
 <p>然后打开game.js看看有没有奇怪的地方</p>
-<p><img src="D:/blog/moonflowersl/source/_posts/阴间20482.png"></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/%E9%98%B4%E9%97%B420482.png?raw=true"></p>
 <p>写个游戏能搞个这玩意？？？</p>
 <p>按照它说的向网页get一下，成功得到flag</p>
-<p><img src="E:\Typora\makedown\阴间20483.png"></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/%E9%98%B4%E9%97%B420483.png?raw=true"></p>
 </blockquote>
 </li>
 </ul>
@@ -151,7 +151,7 @@
 <p> cmd切到dirsearch所在的目录，然后运行命令</p>
 <p><code>py dirsearch.py -u (题目连接) -s 3</code></p>
 <p>加上“-s 3“是因为默认设置扫的太频繁，然后就会：</p>
-<p><img src="E:\Typora\makedown\web-1(1).png" alt="报错"></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-1(1).png?raw=true" alt="报错"></p>
 <p>虽然加个延迟会慢一些但至少能扫出来<a href="http://www.zip/">www.zip</a>.</p>
 </li>
 </ul>
@@ -233,24 +233,23 @@
 <li><p>根据网页提示修改HTTP请求头访问，最后得到flag。</p>
 </li>
 <li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><p>1.没什么思路就截个包，然后好东西就来了。</p>
-<img src="E:\Typora\makedown\web-2.1.png"/>
-
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.1.png?raw=true"></p>
 <p>2.然后就查一下Secret.php目录，顺便抓个包。</p>
-<p><img src="E:\Typora\makedown\web-2.8.png"></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.8.png?raw=true"></p>
 </li>
 </ol>
 <p>   3.要修改它的来源（这个描述可能不确切），可以通过伪造referer头来实现。</p>
-<p>   <img src="E:\Typora\makedown\web-2.2.png"></p>
+<p>   <img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.2.png?raw=true"></p>
 <p>   然后send过去看一下respond</p>
-<p>   <img src="E:\Typora\makedown\web-2.3.png"></p>
+<p>   <img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.3.png?raw=true"></p>
 <p>   4.发起请求的浏览器的修改可以通过修改User-Agent来实现</p>
-<p>   <img src="E:\Typora\makedown\web-2.4.png"></p>
+<p>   <img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.4.png?raw=true"></p>
 <p>   然后还没完</p>
-<p>   <img src="E:\Typora\makedown\web-2.5.png"></p>
+<p>   <img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.5.png?raw=true"></p>
 <p>   5.要弄成本地访问，可以通过伪造XFF头来实现</p>
-<p>   <img src="E:\Typora\makedown\web-2.6.png"></p>
+<p>   <img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.6.png?raw=true"></p>
 <p>   终于结束了。。。。。。</p>
-<p>   <img src="E:\Typora\makedown\web-2.7.png"></p>
+<p>   <img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.7.png?raw=true"></p>
 <h4 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花!!!"></a>完结撒花!!!</h4><ul>
 <li><h3 id="get的新姿势-1"><a href="#get的新姿势-1" class="headerlink" title="get的新姿势"></a>get的新姿势</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">:authority: www.google.com.hk    # 请求的域名（对方的服务器地址）</span><br><span class="line">:method: GET                     # 请求方法，一般浏览器访问网站使用GET请求                     </span><br><span class="line">:path: &#x2F;?gws_rd&#x3D;ssl              # 请求路径，也就是 https:&#x2F;&#x2F;ww.google.com.hk&#x2F; 后面的内容</span><br><span class="line">:scheme: https                   # 请求的协议，这里使用https协议（使用SSL加密的http协议）</span><br><span class="line">accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;webp,image&#x2F;apng响应头,*&#x2F;*;q&#x3D;0.8,application&#x2F;signed-exchange;v&#x3D;b3;q&#x3D;0.9</span><br><span class="line"># 请求文件类型，可以吧这里的文件类型Google一下，因为篇幅太长这里就不做详细介绍了（如text&#x2F;html是文档&#x2F;HTML文档的意思）</span><br><span class="line">accept-encoding: gzip, deflate, br  # 压缩类型，支援gzip,deflate,br 压缩方式</span><br><span class="line">accept-language: zh-HK,zh;q&#x3D;0.9  # 浏览器语言，我的默认语言是 zh-hk （中国-香港）</span><br><span class="line">cache-control: no-cache          # 缓存讯息，这里是 不缓存（no-cache）</span><br><span class="line">pragma: no-cache                 # 缓存来源</span><br><span class="line">sec-fetch-dest: document         # sec-fetch-* 意为如何使用返回的参数</span><br><span class="line">sec-fetch-mode: navigate</span><br><span class="line">sec-fetch-site: same-origin</span><br><span class="line">sec-fetch-user: ?1</span><br><span class="line">upgrade-insecure-requests: 1     # 不用在意这个东西</span><br><span class="line">user-agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;86.0.4240.183 Safari&#x2F;537.36 Edg&#x2F;86.0.622.63</span><br><span class="line"># 非常重要的浏览器UA，表明了浏览器的身份：是什么内核，运行在什么系统上</span><br></pre></td></tr></table></figure>
 
