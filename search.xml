@@ -260,4 +260,32 @@
 </ul>
 ]]></content>
   </entry>
+  <entry>
+    <title>web-3 buuoj [极客大挑战 2019]Upload</title>
+    <url>/2020/12/14/3/</url>
+    <content><![CDATA[<h1 id="buuoj-极客大挑战-2019-Upload"><a href="#buuoj-极客大挑战-2019-Upload" class="headerlink" title="buuoj [极客大挑战 2019]Upload"></a>buuoj [极客大挑战 2019]Upload</h1><blockquote>
+<ul>
+<li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
+<li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
+<li><h4 id="get的新姿势"><a href="#get的新姿势" class="headerlink" title="get的新姿势"></a>get的新姿势</h4></li>
+</ul>
+</blockquote>
+<ul>
+<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li>显然是个文件上传漏洞，那就先传个一句话木马试试。</li>
+<li>必须要求是图片类型，后面加上.png。</li>
+<li>还不行，看来是在服务端的过滤了，那就改一下Content-Type头（MIME协议）。</li>
+<li>过滤了php？！此处采用了phtml这个骚姿势（当然一句话木马也要改一下）。</li>
+<li>还不行，似乎能根据文件内容判断。再次骚姿势，在文件前面加上个图片的文件头伪造，成功传入木马。</li>
+</ol>
+</li>
+<li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><ol>
+<li><p>先随便传一个试试吧</p>
+<p><img src=""></p>
+</li>
+</ol>
+</li>
+</ul>
+]]></content>
+  </entry>
 </search>
