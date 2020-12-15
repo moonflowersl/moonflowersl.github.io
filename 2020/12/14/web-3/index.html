@@ -23,29 +23,26 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"moonflowersl.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="buuoj[极客大挑战 2019]Http1  解题思路 解题过程 get的新姿势">
+<meta name="description" content="buuoj [极客大挑战 2019]Upload  解题思路 解题过程 get的新姿势">
 <meta property="og:type" content="article">
-<meta property="og:title" content="web-2 buuoj[极客大挑战 2019]Http1">
-<meta property="og:url" content="https://moonflowersl.github.io/2020/12/12/web-2/index.html">
+<meta property="og:title" content="web-3 buuoj [极客大挑战 2019]Upload">
+<meta property="og:url" content="https://moonflowersl.github.io/2020/12/14/web-3/index.html">
 <meta property="og:site_name" content="Herbal Garden">
-<meta property="og:description" content="buuoj[极客大挑战 2019]Http1  解题思路 解题过程 get的新姿势">
+<meta property="og:description" content="buuoj [极客大挑战 2019]Upload  解题思路 解题过程 get的新姿势">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.1.png?raw=true">
-<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.8.png?raw=true">
-<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.2.png?raw=true">
-<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.3.png?raw=true">
-<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.4.png?raw=true">
-<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.5.png?raw=true">
-<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.6.png?raw=true">
-<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.7.png?raw=true">
-<meta property="article:published_time" content="2020-12-12T10:27:17.000Z">
-<meta property="article:modified_time" content="2020-12-13T13:44:51.938Z">
+<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-3.1.png?raw=true">
+<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-3.2.png?raw=true">
+<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-3.3.png?raw=true">
+<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-3.4.png?raw=true">
+<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-3.5.png?raw=true">
+<meta property="article:published_time" content="2020-12-14T12:11:45.000Z">
+<meta property="article:modified_time" content="2020-12-15T00:30:32.387Z">
 <meta property="article:author" content="MoonFlower">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.1.png?raw=true">
+<meta name="twitter:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-3.1.png?raw=true">
 
 
-<link rel="canonical" href="https://moonflowersl.github.io/2020/12/12/web-2/">
+<link rel="canonical" href="https://moonflowersl.github.io/2020/12/14/web-3/">
 
 
 <script class="page-configurations">
@@ -57,7 +54,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>web-2 buuoj[极客大挑战 2019]Http1 | Herbal Garden</title>
+<title>web-3 buuoj [极客大挑战 2019]Upload | Herbal Garden</title>
   
 
 
@@ -224,7 +221,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#buuoj-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Http1"><span class="nav-number">1.</span> <span class="nav-text">buuoj[极客大挑战 2019]Http1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">1.0.1.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B"><span class="nav-number">1.0.2.</span> <span class="nav-text">解题过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get%E7%9A%84%E6%96%B0%E5%A7%BF%E5%8A%BF"><span class="nav-number">1.0.3.</span> <span class="nav-text">get的新姿势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-1"><span class="nav-number">1.1.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B-1"><span class="nav-number">1.2.</span> <span class="nav-text">解题过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E7%BB%93%E6%92%92%E8%8A%B1"><span class="nav-number">1.2.1.</span> <span class="nav-text">完结撒花!!!</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get%E7%9A%84%E6%96%B0%E5%A7%BF%E5%8A%BF-1"><span class="nav-number">1.3.</span> <span class="nav-text">get的新姿势</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#buuoj-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Upload"><span class="nav-number">1.</span> <span class="nav-text">buuoj [极客大挑战 2019]Upload</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">解题过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get%E7%9A%84%E6%96%B0%E5%A7%BF%E5%8A%BF"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">get的新姿势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-1"><span class="nav-number">1.0.1.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B-1"><span class="nav-number">1.0.2.</span> <span class="nav-text">解题过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get%E7%9A%84%E6%96%B0%E5%A7%BF%E5%8A%BF-1"><span class="nav-number">1.0.3.</span> <span class="nav-text">get的新姿势</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#MIME%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.0.3.0.1.</span> <span class="nav-text">MIME协议</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#phtml"><span class="nav-number">1.0.3.0.2.</span> <span class="nav-text">phtml</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E7%9A%84%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="nav-number">1.0.3.0.3.</span> <span class="nav-text">一句话木马的执行原理</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -278,7 +275,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://moonflowersl.github.io/2020/12/12/web-2/">
+    <link itemprop="mainEntityOfPage" href="https://moonflowersl.github.io/2020/12/14/web-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -291,7 +288,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          web-2 buuoj[极客大挑战 2019]Http1
+          web-3 buuoj [极客大挑战 2019]Upload
         </h1>
 
         <div class="post-meta-container">
@@ -302,14 +299,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2020-12-12 18:27:17" itemprop="dateCreated datePublished" datetime="2020-12-12T18:27:17+08:00">2020-12-12</time>
+      <time title="创建时间：2020-12-14 20:11:45" itemprop="dateCreated datePublished" datetime="2020-12-14T20:11:45+08:00">2020-12-14</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-12-13 21:44:51" itemprop="dateModified" datetime="2020-12-13T21:44:51+08:00">2020-12-13</time>
+        <time title="修改时间：2020-12-15 08:30:32" itemprop="dateModified" datetime="2020-12-15T08:30:32+08:00">2020-12-15</time>
       </span>
 
   
@@ -322,7 +319,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="buuoj-极客大挑战-2019-Http1"><a href="#buuoj-极客大挑战-2019-Http1" class="headerlink" title="buuoj[极客大挑战 2019]Http1"></a>buuoj[极客大挑战 2019]Http1</h2><blockquote>
+        <h1 id="buuoj-极客大挑战-2019-Upload"><a href="#buuoj-极客大挑战-2019-Upload" class="headerlink" title="buuoj [极客大挑战 2019]Upload"></a>buuoj [极客大挑战 2019]Upload</h1><blockquote>
 <ul>
 <li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
 <li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
@@ -332,41 +329,60 @@
 <a id="more"></a>
 
 <ul>
-<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3></li>
-</ul>
-<ol>
-<li><p>是个很正经的网页，f12搜一下源码，没什么明显的提示信息。</p>
+<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li>显然是个文件上传漏洞，那就先传个一句话木马试试。</li>
+<li>必须要求是图片类型，后面加上.png。</li>
+<li>还不行，看来是在服务端的过滤了，那就改一下Content-Type头（MIME协议）。</li>
+<li>过滤了php？！此处采用了phtml这个骚姿势（当然一句话木马也要改一下）。</li>
+<li>还不行，似乎能根据文件内容判断。再次骚姿势，在文件前面加上个图片的文件头伪造，成功传入木马。</li>
+</ol>
 </li>
-<li><p>dirsearch扫一扫也没什么有用的东西。</p>
+<li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><ol>
+<li><p>先随便传一个试试吧</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-3.1.png?raw=true"></p>
 </li>
-<li><p>题目提示HTTP，burpsuite截个包，发现相应里提示Secret.php。</p>
+<li><p>再加个png后缀名，判断是前端过滤还是服务端过滤</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-3.2.png?raw=true"></p>
+<p>多半是服务端对上传文件的检查了。。。麻烦</p>
 </li>
-<li><p>根据网页提示修改HTTP请求头访问，最后得到flag。</p>
+<li><p>改一下Content-Type头，用于伪造传入的文件类型</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-3.3.png?raw=true"></p>
+<p>就但看php不爽？？？直接给滤了。</p>
 </li>
-<li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><p>1.没什么思路就截个包，然后好东西就来了。</p>
-<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.1.png?raw=true"></p>
-<p>2.然后就查一下Secret.php目录，顺便抓个包。</p>
-<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.8.png?raw=true"></p>
+<li><p>传php看来是不可行了，只能试试phtml了。。。</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-3.4.png?raw=true"></p>
+<p>绕过了但是还不行，可能是对传入的文件内容进行了检查（离谱）。</p>
+</li>
+<li><p>在文件中写入图片的文件头，执行的时候会被当做无意义字符过滤掉。</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-3.5.png?raw=true"></p>
 </li>
 </ol>
-<p>   3.要修改它的来源（这个描述可能不确切），可以通过伪造referer头来实现。</p>
-<p>   <img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.2.png?raw=true"></p>
-<p>   然后send过去看一下respond</p>
-<p>   <img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.3.png?raw=true"></p>
-<p>   4.发起请求的浏览器的修改可以通过修改User-Agent来实现</p>
-<p>   <img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.4.png?raw=true"></p>
-<p>   然后还没完</p>
-<p>   <img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.5.png?raw=true"></p>
-<p>   5.要弄成本地访问，可以通过伪造XFF头来实现</p>
-<p>   <img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.6.png?raw=true"></p>
-<p>   终于结束了。。。。。。</p>
-<p>   <img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-2.7.png?raw=true"></p>
-<h4 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花!!!"></a>完结撒花!!!</h4><ul>
-<li><h3 id="get的新姿势-1"><a href="#get的新姿势-1" class="headerlink" title="get的新姿势"></a>get的新姿势</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">:authority: www.google.com.hk    # 请求的域名（对方的服务器地址）</span><br><span class="line">:method: GET                     # 请求方法，一般浏览器访问网站使用GET请求                     </span><br><span class="line">:path: &#x2F;?gws_rd&#x3D;ssl              # 请求路径，也就是 https:&#x2F;&#x2F;ww.google.com.hk&#x2F; 后面的内容</span><br><span class="line">:scheme: https                   # 请求的协议，这里使用https协议（使用SSL加密的http协议）</span><br><span class="line">accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;webp,image&#x2F;apng响应头,*&#x2F;*;q&#x3D;0.8,application&#x2F;signed-exchange;v&#x3D;b3;q&#x3D;0.9</span><br><span class="line"># 请求文件类型，可以吧这里的文件类型Google一下，因为篇幅太长这里就不做详细介绍了（如text&#x2F;html是文档&#x2F;HTML文档的意思）</span><br><span class="line">accept-encoding: gzip, deflate, br  # 压缩类型，支援gzip,deflate,br 压缩方式</span><br><span class="line">accept-language: zh-HK,zh;q&#x3D;0.9  # 浏览器语言，我的默认语言是 zh-hk （中国-香港）</span><br><span class="line">cache-control: no-cache          # 缓存讯息，这里是 不缓存（no-cache）</span><br><span class="line">pragma: no-cache                 # 缓存来源</span><br><span class="line">sec-fetch-dest: document         # sec-fetch-* 意为如何使用返回的参数</span><br><span class="line">sec-fetch-mode: navigate</span><br><span class="line">sec-fetch-site: same-origin</span><br><span class="line">sec-fetch-user: ?1</span><br><span class="line">upgrade-insecure-requests: 1     # 不用在意这个东西</span><br><span class="line">user-agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;86.0.4240.183 Safari&#x2F;537.36 Edg&#x2F;86.0.622.63</span><br><span class="line"># 非常重要的浏览器UA，表明了浏览器的身份：是什么内核，运行在什么系统上</span><br></pre></td></tr></table></figure>
-
-<p>（来自知乎-啄木鸟的面包房）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">referer: www.baidu.com (记录从哪个网站过来的，可以用来统计流量和防盗链，如果是空就是没有限制)</span><br><span class="line">x-forwarded-for：127.0.0.0 (用来表示 HTTP 请求端真实 IP)</span><br></pre></td></tr></table></figure>
-
+</li>
+<li><h3 id="get的新姿势-1"><a href="#get的新姿势-1" class="headerlink" title="get的新姿势"></a>get的新姿势</h3><ol>
+<li><h5 id="MIME协议"><a href="#MIME协议" class="headerlink" title="MIME协议"></a>MIME协议</h5><p>最早的HTTP协议中，并没有附加的数据类型信息，所有传送的数据都被客户程序解释为超文本标记语言HTML 文档，而为了支持多媒体数据类型，HTTP协议中就使用了附加在文档之前的MIME数据类型信息来标识数据类型。</p>
+<p>　　MIME意为多目Internet邮件扩展，它设计的最初目的是为了在发送电子邮件时附加多媒体数据，让邮件客户程序能根据其类型进行处理。然而当它被HTTP协议支持之后，它的意义就更为显著了。它使得HTTP传输的不仅是普通的文本，而变得丰富多彩。</p>
+<p>　　每个MIME类型由两部分组成，前面是数据的大类别，例如声音audio、图象image等，后面定义具体的种类。</p>
+<p>　　常见的MIME类型</p>
+<p>　　超文本标记语言文本 .html,.html text/html</p>
+<p>　　普通文本 .txt text/plain</p>
+<p>　　RTF文本 .rtf application/rtf</p>
+<p>　　GIF图形 .gif image/gif</p>
+<p>　　JPEG图形 .jpeg,.jpg image/jpeg</p>
+<p>　　au声音文件 .au audio/basic</p>
+<p>　　MIDI音乐文件 mid,.midi audio/midi,audio/x-midi</p>
+<p>　　RealAudio音乐文件 .ra, .ram audio/x-pn-realaudio</p>
+<p>　　MPEG文件 .mpg,.mpeg video/mpeg</p>
+<p>　　AVI文件 .avi video/x-msvideo</p>
+<p>　　GZIP文件 .gz application/x-gzip</p>
+<p>　　TAR文件 .tar application/x-tar</p>
+<p>由于MIME类型与文档的后缀相关，因此服务器使用文档的后缀来区分不同文件的MIME类型，服务器中必须定义文档后缀和MIME类型之间的对应关系。而客户程序从服务器上接收数据的时候，它只是从服务器接受数据流，并不了解文档的名字，因此服务器必须使用附加信息来告诉客户程序数据的MIME类型。服务器在发送真正的数据之前，就要先发送标志数据的MIME类型的信息，这个信息使用Content-type关键字进行定义。</p>
+</li>
+<li><h5 id="phtml"><a href="#phtml" class="headerlink" title="phtml"></a>phtml</h5><p>其实我现在也没怎么懂。可能php里面是纯的php代码，而phtml中是js代码，不过通过修改language可以达到php的效果。</p>
+<p>两者在服务器上的效果是一样的。</p>
+</li>
+<li><h5 id="一句话木马的执行原理"><a href="#一句话木马的执行原理" class="headerlink" title="一句话木马的执行原理"></a>一句话木马的执行原理</h5><p>eval函数中的字符串会被当做PHP语句来执行，其中用post的方式提交了一个变量，因此这个变量的具体值是我们可以控制的，而菜刀、蚁剑此类工具就是利用这个变量传入其他语句，本质上是一种小马传大马的方式。</p>
+</li>
+</ol>
 </li>
 </ul>
 
@@ -382,13 +398,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/12/12/Web-1%20buuoj%5B%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98%202019%5DPHP/" rel="prev" title="web-1 buuoj[极客大挑战 2019]PHP1">
-                  <i class="fa fa-chevron-left"></i> web-1 buuoj[极客大挑战 2019]PHP1
+                <a href="/2020/12/12/web-2/" rel="prev" title="web-2 buuoj[极客大挑战 2019]Http1">
+                  <i class="fa fa-chevron-left"></i> web-2 buuoj[极客大挑战 2019]Http1
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/12/14/web-3/" rel="next" title="web-3 buuoj [极客大挑战 2019]Upload">
-                  web-3 buuoj [极客大挑战 2019]Upload <i class="fa fa-chevron-right"></i>
+                <a href="/2020/12/15/web-4/" rel="next" title="web-4 buuoj [极客大挑战 2019]BabySQL">
+                  web-4 buuoj [极客大挑战 2019]BabySQL <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

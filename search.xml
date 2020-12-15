@@ -262,7 +262,7 @@
   </entry>
   <entry>
     <title>web-3 buuoj [极客大挑战 2019]Upload</title>
-    <url>/2020/12/14/3/</url>
+    <url>/2020/12/14/web-3/</url>
     <content><![CDATA[<h1 id="buuoj-极客大挑战-2019-Upload"><a href="#buuoj-极客大挑战-2019-Upload" class="headerlink" title="buuoj [极客大挑战 2019]Upload"></a>buuoj [极客大挑战 2019]Upload</h1><blockquote>
 <ul>
 <li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
@@ -326,6 +326,29 @@
 </li>
 <li><h5 id="一句话木马的执行原理"><a href="#一句话木马的执行原理" class="headerlink" title="一句话木马的执行原理"></a>一句话木马的执行原理</h5><p>eval函数中的字符串会被当做PHP语句来执行，其中用post的方式提交了一个变量，因此这个变量的具体值是我们可以控制的，而菜刀、蚁剑此类工具就是利用这个变量传入其他语句，本质上是一种小马传大马的方式。</p>
 </li>
+</ol>
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>web-4 buuoj [极客大挑战 2019]BabySQL</title>
+    <url>/2020/12/15/web-4/</url>
+    <content><![CDATA[<h1 id="buuoj-极客大挑战-2019-BabySQL"><a href="#buuoj-极客大挑战-2019-BabySQL" class="headerlink" title="buuoj [极客大挑战 2019]BabySQL"></a>buuoj [极客大挑战 2019]BabySQL</h1><blockquote>
+<ul>
+<li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
+<li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
+<li><h4 id="get的新姿势"><a href="#get的新姿势" class="headerlink" title="get的新姿势"></a>get的新姿势</h4></li>
+</ul>
+</blockquote>
+<a id="more"></a>
+
+<ul>
+<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li>两个输入框，用户名试一下admin，密码随便试试。（后来看wp才知道，ctf比赛不是搞渗透测试，用户名尽量别用admin）</li>
+<li>密码错误，对password试试注入。</li>
+<li>根据回显判断应该用union联合注入，然而报错信息中没有显示各种关键词。</li>
+<li>推断应该是对关键字进行了替换，尝试双写注入，最后成功绕过，得到flag。</li>
 </ol>
 </li>
 </ul>
