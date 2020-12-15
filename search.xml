@@ -270,6 +270,8 @@
 <li><h4 id="get的新姿势"><a href="#get的新姿势" class="headerlink" title="get的新姿势"></a>get的新姿势</h4></li>
 </ul>
 </blockquote>
+<a id="more"></a>
+
 <ul>
 <li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
 <li>显然是个文件上传漏洞，那就先传个一句话木马试试。</li>
