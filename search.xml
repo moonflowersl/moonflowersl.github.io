@@ -351,6 +351,27 @@
 <li>推断应该是对关键字进行了替换，尝试双写注入，最后成功绕过，得到flag。</li>
 </ol>
 </li>
+<li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><ol>
+<li><p>随便试试</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-4.1.png?raw=true"></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-4.2.png?raw=true"></p>
+<p>有回显，试试union联合注入。</p>
+</li>
+<li><p>然而发现有神奇的错误回显</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-4.3.png?raw=true"></p>
+<p>错误信息没有显示union和select？难道是过滤了？试试先。</p>
+</li>
+<li><p>看来是用了replace函数对关键字进行了替换，那可以试一下双写注入过滤。</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-4.4.png?raw=true"></p>
+</li>
+<li><p>似乎可以，继续查询表信息</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-4.5.png?raw=true"></p>
+</li>
+<li><p>然后好像还有过滤，都是报错信息中没有显示，继续尝试双写</p>
+</li>
+<li></li>
+</ol>
+</li>
 </ul>
 ]]></content>
   </entry>
