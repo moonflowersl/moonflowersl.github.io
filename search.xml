@@ -408,8 +408,63 @@
 ]]></content>
   </entry>
   <entry>
-    <title>web-5</title>
+    <title>buuoj[ZJCTF 2019]NiZhuanSiWei</title>
     <url>/2020/12/22/web-5/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h2 id="buuoj-ZJCTF-2019-NiZhuanSiWei"><a href="#buuoj-ZJCTF-2019-NiZhuanSiWei" class="headerlink" title="buuoj[ZJCTF 2019]NiZhuanSiWei"></a>buuoj[ZJCTF 2019]NiZhuanSiWei</h2><blockquote>
+<ul>
+<li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
+<li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
+<li><h4 id="get的新姿势"><a href="#get的新姿势" class="headerlink" title="get的新姿势"></a>get的新姿势</h4></li>
+</ul>
+</blockquote>
+<a id="more"></a>
+
+<ul>
+<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li><p>get方式提交三个参数，然后通过一系列操作查看flag。</p>
+</li>
+<li><p>首先提交一个指定内容的text文件。</p>
+</li>
+<li><p>因为有flag关键词的过滤，所以不能直接查看，根据提示先查看一下useless.php。</p>
+</li>
+<li><p>运用反序列化的漏洞查看flag。</p>
+<p>（然而我第二步就不知道怎么做了，看了wp才记起还有php伪协议这好东西……）</p>
+</li>
+</ol>
+</li>
+<li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><p>1.get方式提交text，if语句中用了file_get_contents()函数，意味着text需要是个文件，于是就可以使用data协议传入。</p>
+<p>data协议读入文件的格式：data://text/plain,文件内容</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-5.1.png?raw=true"></p>
+<p>2.第一层if绕过了，现在要想办法通过传file查看一下useless.php文件，这里同样用php伪协议对文件直接进行读取。</p>
+<p>格式:php://filter/read/convert.base64-encode/resource=文件名</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-5.2.png?raw=true"></p>
+<p>因为要是base64的方式查看，所以得到的东西要用base64解码一下</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-5.6.png?raw=true"></p>
+<p>3.然后是经典php反序列化的问题了，用在线php写一个就完了</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-5.3.png?raw=true"></p>
+<p>然后提交</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-5.4.png?raw=true"></p>
+<p>这里的useless不需要查看了，所以也不需要php伪协议了。</p>
+<p>4.得到flag</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-5.5.png?raw=true"></p>
+</li>
+<li><h3 id="get的新姿势-1"><a href="#get的新姿势-1" class="headerlink" title="get的新姿势"></a>get的新姿势</h3><ol>
+<li><p>file:// 用于访问本地文件系统，在CTF中通常用来读取本地文件的且不受allow_url_fopen与allow_url_include的影响</p>
+<p>Example：<u>?file=file://D:/soft/phpStudy/WWW/phpcode.txt</u></p>
+</li>
+<li><p>php:// 访问各个输入/输出流（I/O streams），在CTF中经常使用的是php://filter和php://input，php://filter用于读取源码，php://input用于执行php代码。</p>
+<p>Example：<u>?file=php://filter/read=convert.base64-encode/resource=./cmd.php</u></p>
+<p>​                   <u>?file=php://input &lt;?php phpinfo()?&gt;</u></p>
+</li>
+<li><p>zip://, bzip2://, zlib:// 均属于压缩流，可以访问压缩文件中的子文件，更重要的是不需要指定后缀名。</p>
+<p>Example：<u>?file=zip://D:/soft/phpStudy/WWW/file.jpg%23phpcode.txt</u></p>
+</li>
+<li><p>自PHP&gt;=5.2.0起，可以使用data://数据流封装器，以传递相应格式的数据。通常可以用来执行PHP代码。</p>
+<p>Example：<u>?file=data://text/plain,&lt;?php phpinfo()?&gt;</u></p>
+</li>
+</ol>
+</li>
+</ul>
+]]></content>
   </entry>
 </search>
