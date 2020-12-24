@@ -529,6 +529,8 @@
 <li><h4 id="实名吐槽"><a href="#实名吐槽" class="headerlink" title="实名吐槽"></a>实名吐槽</h4></li>
 </ul>
 </blockquote>
+<a id="more"></a>
+
 <ul>
 <li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3></li>
 </ul>
@@ -543,7 +545,37 @@
 <ol>
 <li>首先往下找找，发现unserialize函数，可以通过构造特殊的字符串来执行特定的命令。</li>
 </ol>
-<p><img src=""></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.1.png?raw=true"></p>
+<p>​        然后找到hashteam函数，看看它到底搞了个什么</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.2.png?raw=true"></p>
+<ol start="2">
+<li><p>然而hashteam函数执行的是Orbic函数，直接输出了“Orbic”，没有像我们希望的执行Qu4ck函数，但是在构造反序列化的字符串的时候却可以实现在hashteam函数中调用Qu4ck。根据要求写一个PHP小程序跑一下。</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.3.png?raw=true"></p>
+</li>
+<li><p>假如程序能顺利地执行这条语句就ok了，然而我们注意到在中间还有这么一句代码：</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.4.png?raw=true"></p>
+<p>顺着函数名找到函数中的操作：</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.5.png?raw=true"></p>
+<p>mdzz这可能是个几乎没有毛病的过滤，一波操作把大小写字母数字还有_$字符都过滤了。这时候看看其他语句，看看能不能找到什么特殊的绕过的方法。</p>
+</li>
+<li><p>注意到这几条语句</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.7.png?raw=true"></p>
+<p>extract函数能将数组的键名作为变量名，键值作为变量值，将键名对应的变量赋值，EXTR_SKIP则可以防止此次操作会覆盖上一次操作。</p>
+<p>unset函数能将一个变量销毁（相当于在后面的执行过程中没有定义过该变量了）</p>
+<p>综合一下，extract可以重新定义并初始化一个变量，而unset能将变量销毁，中间的过滤是但凡有$_GET[]都无法正常运行的（$_GET[]却是系统早就定义好的），聪明的你一定有什么想法了对吧？没错，我们可以将$_GET[]先销毁，然后再想办法让它重新被赋值。</p>
+</li>
+<li><p> 注意，这里除了以get方式提交参数，还能以post的方式提交一个参数，这或许会成为我们的突破口，结合extract函数，是不是如果提交一个_GET[shell]=xxx样式的参数就可以让$_GET[shell]在被销毁之后无中生有了。</p>
+</li>
+<li><p>现在重构的计划有了，但销毁的计划还差点，这里有必要认真分析一下这两个循环里面的代码了。然而一顿操作后我还是看不懂它要干什么（好吧是我太菜了）。那就代入具体的值模拟一下试试吧……</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">foreach</span> (<span class="keyword">array</span>(<span class="string">&#x27;_POST&#x27;</span>,<span class="string">&#x27;_GET&#x27;</span>)<span class="keyword">as</span> <span class="variable">$k</span>)&#123;</span><br><span class="line">    <span class="comment">//$k = _POST </span></span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$$k</span>)&#123;</span><br><span class="line">        <span class="comment">//$$k = $_POST &#123;_GET[shell] =&gt; xxx&#125;</span></span><br><span class="line">        <span class="keyword">foreach</span>(<span class="variable">$$k</span> <span class="keyword">as</span> <span class="variable">$key</span>=&gt;<span class="variable">$value</span>)&#123;</span><br><span class="line">            <span class="comment">// $key = _GET[shell] </span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$$key</span>)&amp;&amp;<span class="variable">$$key</span>==<span class="variable">$value</span>)</span><br><span class="line">            <span class="comment">//$$key = $_GET[shell] = xxx(get提交的！！！) </span></span><br><span class="line">                <span class="keyword">unset</span>(<span class="variable">$$key</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一波分析后，发现要是$_GET[shell]=xxx就可以成功销毁它了，注意：此时$_GET[shell]是个变量，而它是可以通过get方式提交的！！！</p>
+<p>那最后答案也很明了了，post一个_GET[shell]=xxx,再get一个shell=xxx，这里的xxx就是我们前面构造的利用反序列化的字符串了。</p>
+</li>
+</ol>
+<ul>
+<li><h3 id="实名吐槽-1"><a href="#实名吐槽-1" class="headerlink" title="实名吐槽"></a>实名吐槽</h3><h6 id="太多了也没法说，归根结底也就是一句话：我太菜了…"><a href="#太多了也没法说，归根结底也就是一句话：我太菜了…" class="headerlink" title="太多了也没法说，归根结底也就是一句话：我太菜了…"></a>太多了也没法说，归根结底也就是一句话：我太菜了…</h6></li>
+</ul>
 ]]></content>
   </entry>
 </search>

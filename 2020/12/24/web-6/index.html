@@ -23,17 +23,24 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"moonflowersl.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="新生赛web3-混元形意  解题思路 解题过程 实名吐槽    解题思路   PHP代码审计，发现有反序列化函数，尝试构造字符串利用反序列化漏洞。 对get提交的参数存在过滤，尝试绕过。 通过unset和extract函数实现变量覆盖，绕过过滤。   解题过程   首先往下找找，发现unserialize函数，可以通过构造特殊的字符串来执行特定的命令。">
+<meta name="description" content="新生赛web3-混元形意  解题思路 解题过程 实名吐槽">
 <meta property="og:type" content="article">
 <meta property="og:title" content="新生赛web3-混元形意">
 <meta property="og:url" content="https://moonflowersl.github.io/2020/12/24/web-6/index.html">
 <meta property="og:site_name" content="Herbal Garden">
-<meta property="og:description" content="新生赛web3-混元形意  解题思路 解题过程 实名吐槽    解题思路   PHP代码审计，发现有反序列化函数，尝试构造字符串利用反序列化漏洞。 对get提交的参数存在过滤，尝试绕过。 通过unset和extract函数实现变量覆盖，绕过过滤。   解题过程   首先往下找找，发现unserialize函数，可以通过构造特殊的字符串来执行特定的命令。">
+<meta property="og:description" content="新生赛web3-混元形意  解题思路 解题过程 实名吐槽">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.1.png?raw=true">
+<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.2.png?raw=true">
+<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.3.png?raw=true">
+<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.4.png?raw=true">
+<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.5.png?raw=true">
+<meta property="og:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.7.png?raw=true">
 <meta property="article:published_time" content="2020-12-24T12:50:25.000Z">
-<meta property="article:modified_time" content="2020-12-24T15:53:32.142Z">
+<meta property="article:modified_time" content="2020-12-24T16:53:37.539Z">
 <meta property="article:author" content="MoonFlower">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.1.png?raw=true">
 
 
 <link rel="canonical" href="https://moonflowersl.github.io/2020/12/24/web-6/">
@@ -215,7 +222,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B0%E7%94%9F%E8%B5%9Bweb3-%E6%B7%B7%E5%85%83%E5%BD%A2%E6%84%8F"><span class="nav-number">1.</span> <span class="nav-text">新生赛web3-混元形意</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">解题过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E5%90%8D%E5%90%90%E6%A7%BD"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">实名吐槽</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-1"><span class="nav-number">1.0.1.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B-1"><span class="nav-number">1.0.2.</span> <span class="nav-text">解题过程</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B0%E7%94%9F%E8%B5%9Bweb3-%E6%B7%B7%E5%85%83%E5%BD%A2%E6%84%8F"><span class="nav-number">1.</span> <span class="nav-text">新生赛web3-混元形意</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">解题过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E5%90%8D%E5%90%90%E6%A7%BD"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">实名吐槽</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-1"><span class="nav-number">1.0.1.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B-1"><span class="nav-number">1.0.2.</span> <span class="nav-text">解题过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E5%90%8D%E5%90%90%E6%A7%BD-1"><span class="nav-number">1.0.3.</span> <span class="nav-text">实名吐槽</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%A4%AA%E5%A4%9A%E4%BA%86%E4%B9%9F%E6%B2%A1%E6%B3%95%E8%AF%B4%EF%BC%8C%E5%BD%92%E6%A0%B9%E7%BB%93%E5%BA%95%E4%B9%9F%E5%B0%B1%E6%98%AF%E4%B8%80%E5%8F%A5%E8%AF%9D%EF%BC%9A%E6%88%91%E5%A4%AA%E8%8F%9C%E4%BA%86%E2%80%A6"><span class="nav-number">1.0.3.0.0.1.</span> <span class="nav-text">太多了也没法说，归根结底也就是一句话：我太菜了…</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -292,10 +299,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2020-12-24 20:50:25 / 修改时间：23:53:32" itemprop="dateCreated datePublished" datetime="2020-12-24T20:50:25+08:00">2020-12-24</time>
+      <time title="创建时间：2020-12-24 20:50:25" itemprop="dateCreated datePublished" datetime="2020-12-24T20:50:25+08:00">2020-12-24</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-12-25 00:53:37" itemprop="dateModified" datetime="2020-12-25T00:53:37+08:00">2020-12-25</time>
+      </span>
 
   
 </div>
@@ -314,6 +327,8 @@
 <li><h4 id="实名吐槽"><a href="#实名吐槽" class="headerlink" title="实名吐槽"></a>实名吐槽</h4></li>
 </ul>
 </blockquote>
+<a id="more"></a>
+
 <ul>
 <li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3></li>
 </ul>
@@ -328,7 +343,37 @@
 <ol>
 <li>首先往下找找，发现unserialize函数，可以通过构造特殊的字符串来执行特定的命令。</li>
 </ol>
-<p><img src=""></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.1.png?raw=true"></p>
+<p>​        然后找到hashteam函数，看看它到底搞了个什么</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.2.png?raw=true"></p>
+<ol start="2">
+<li><p>然而hashteam函数执行的是Orbic函数，直接输出了“Orbic”，没有像我们希望的执行Qu4ck函数，但是在构造反序列化的字符串的时候却可以实现在hashteam函数中调用Qu4ck。根据要求写一个PHP小程序跑一下。</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.3.png?raw=true"></p>
+</li>
+<li><p>假如程序能顺利地执行这条语句就ok了，然而我们注意到在中间还有这么一句代码：</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.4.png?raw=true"></p>
+<p>顺着函数名找到函数中的操作：</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.5.png?raw=true"></p>
+<p>mdzz这可能是个几乎没有毛病的过滤，一波操作把大小写字母数字还有_$字符都过滤了。这时候看看其他语句，看看能不能找到什么特殊的绕过的方法。</p>
+</li>
+<li><p>注意到这几条语句</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-6.7.png?raw=true"></p>
+<p>extract函数能将数组的键名作为变量名，键值作为变量值，将键名对应的变量赋值，EXTR_SKIP则可以防止此次操作会覆盖上一次操作。</p>
+<p>unset函数能将一个变量销毁（相当于在后面的执行过程中没有定义过该变量了）</p>
+<p>综合一下，extract可以重新定义并初始化一个变量，而unset能将变量销毁，中间的过滤是但凡有$_GET[]都无法正常运行的（$_GET[]却是系统早就定义好的），聪明的你一定有什么想法了对吧？没错，我们可以将$_GET[]先销毁，然后再想办法让它重新被赋值。</p>
+</li>
+<li><p> 注意，这里除了以get方式提交参数，还能以post的方式提交一个参数，这或许会成为我们的突破口，结合extract函数，是不是如果提交一个_GET[shell]=xxx样式的参数就可以让$_GET[shell]在被销毁之后无中生有了。</p>
+</li>
+<li><p>现在重构的计划有了，但销毁的计划还差点，这里有必要认真分析一下这两个循环里面的代码了。然而一顿操作后我还是看不懂它要干什么（好吧是我太菜了）。那就代入具体的值模拟一下试试吧……</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span> (<span class="keyword">array</span>(<span class="string">&#x27;_POST&#x27;</span>,<span class="string">&#x27;_GET&#x27;</span>)<span class="keyword">as</span> <span class="variable">$k</span>)&#123;</span><br><span class="line">    <span class="comment">//$k = _POST </span></span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$$k</span>)&#123;</span><br><span class="line">        <span class="comment">//$$k = $_POST &#123;_GET[shell] =&gt; xxx&#125;</span></span><br><span class="line">        <span class="keyword">foreach</span>(<span class="variable">$$k</span> <span class="keyword">as</span> <span class="variable">$key</span>=&gt;<span class="variable">$value</span>)&#123;</span><br><span class="line">            <span class="comment">// $key = _GET[shell] </span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$$key</span>)&amp;&amp;<span class="variable">$$key</span>==<span class="variable">$value</span>)</span><br><span class="line">            <span class="comment">//$$key = $_GET[shell] = xxx(get提交的！！！) </span></span><br><span class="line">                <span class="keyword">unset</span>(<span class="variable">$$key</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一波分析后，发现要是$_GET[shell]=xxx就可以成功销毁它了，注意：此时$_GET[shell]是个变量，而它是可以通过get方式提交的！！！</p>
+<p>那最后答案也很明了了，post一个_GET[shell]=xxx,再get一个shell=xxx，这里的xxx就是我们前面构造的利用反序列化的字符串了。</p>
+</li>
+</ol>
+<ul>
+<li><h3 id="实名吐槽-1"><a href="#实名吐槽-1" class="headerlink" title="实名吐槽"></a>实名吐槽</h3><h6 id="太多了也没法说，归根结底也就是一句话：我太菜了…"><a href="#太多了也没法说，归根结底也就是一句话：我太菜了…" class="headerlink" title="太多了也没法说，归根结底也就是一句话：我太菜了…"></a>太多了也没法说，归根结底也就是一句话：我太菜了…</h6></li>
+</ul>
 
     </div>
 
