@@ -519,4 +519,31 @@
 </ul>
 ]]></content>
   </entry>
+  <entry>
+    <title>新生赛web3-混元形意</title>
+    <url>/2020/12/24/web-6/</url>
+    <content><![CDATA[<h1 id="新生赛web3-混元形意"><a href="#新生赛web3-混元形意" class="headerlink" title="新生赛web3-混元形意"></a>新生赛web3-混元形意</h1><blockquote>
+<ul>
+<li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
+<li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
+<li><h4 id="实名吐槽"><a href="#实名吐槽" class="headerlink" title="实名吐槽"></a>实名吐槽</h4></li>
+</ul>
+</blockquote>
+<ul>
+<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3></li>
+</ul>
+<ol>
+<li>PHP代码审计，发现有反序列化函数，尝试构造字符串利用反序列化漏洞。</li>
+<li>对get提交的参数存在过滤，尝试绕过。</li>
+<li>通过unset和extract函数实现变量覆盖，绕过过滤。</li>
+</ol>
+<ul>
+<li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3></li>
+</ul>
+<ol>
+<li>首先往下找找，发现unserialize函数，可以通过构造特殊的字符串来执行特定的命令。</li>
+</ol>
+<p><img src=""></p>
+]]></content>
+  </entry>
 </search>
