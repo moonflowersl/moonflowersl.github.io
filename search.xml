@@ -468,8 +468,54 @@
 ]]></content>
   </entry>
   <entry>
-    <title>sqli5</title>
+    <title></title>
     <url>/2020/12/24/sqli5/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>title: sqli5<br>date: 2020-12-24 18:44:18<br>tags:</p>
+<h1 id="sqli-labs5-盲注入门"><a href="#sqli-labs5-盲注入门" class="headerlink" title="sqli-labs5 盲注入门"></a>sqli-labs5 盲注入门</h1><blockquote>
+<ul>
+<li><h4 id="布尔型注入"><a href="#布尔型注入" class="headerlink" title="布尔型注入"></a>布尔型注入</h4></li>
+<li><h4 id="时间延迟型注入"><a href="#时间延迟型注入" class="headerlink" title="时间延迟型注入"></a>时间延迟型注入</h4></li>
+</ul>
+</blockquote>
+<ul>
+<li><h3 id="布尔型注入-1"><a href="#布尔型注入-1" class="headerlink" title="布尔型注入"></a>布尔型注入</h3><ol>
+<li><p>象征性检查一下注入方式（题目写的比较明白了）</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/sqli5.1.png?raw=true"></p>
+</li>
+<li><p>检查列数</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/sqli5.2.png?raw=true"></p>
+</li>
+<li><p>通过left函数截取database的前半段字符并进行判断（此处也可以用substr函数直接截取其中的任意一段）</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/sqli5.3.png?raw=true"></p>
+</li>
+<li><p>当然不可能自己挨个试了，我知道的方法有三种：</p>
+<ul>
+<li>手工二分法判断</li>
+<li>扔burpsuite直接爆破</li>
+<li>大佬们通常都写py脚本来跑</li>
+</ul>
+<p>这里我用的burpsuite来爆的</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/sqli5.4.png?raw=true"></p>
+<p>这样就得知database名第一个字母是‘s’，然后通过调整left的参数和字段名最后爆出database名。</p>
+</li>
+<li><p>然后接着爆库名表名。。。就完了。</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/sqli5.5.png?raw=true"></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/sqli5.6.png?raw=true"></p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><h3 id="时间延迟型注入-1"><a href="#时间延迟型注入-1" class="headerlink" title="时间延迟型注入"></a>时间延迟型注入</h3><p>……好麻烦不想写了……</p>
+<p>（算了简单写写思路吧）</p>
+<p>时间延迟型注入主要应用了<strong>if()**和</strong>sleep()**函数。</p>
+<p>*if(条件语句,a,b)*：执行条件语句，如果结果为真则返回a，若为假则返回为b。</p>
+<p>*sleep(a)*：让浏览器歇a秒后再返回。</p>
+<p>把两者一结合我们就可以构造这样的语句了：</p>
+<p>?id=1’ and if(left((select database()),1),sleep(3),1)=’s’ –+</p>
+<p>在这个例子中，如果database名的第一个字母是s，浏览器就会先加载3s再返回，否则会直接显示。</p>
+</li>
+</ul>
+]]></content>
   </entry>
 </search>
