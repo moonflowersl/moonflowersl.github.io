@@ -631,4 +631,31 @@
 </ul>
 ]]></content>
   </entry>
+  <entry>
+    <title>web-8 buuoj [网鼎杯 2018]Fakebook</title>
+    <url>/2020/12/28/web-8/</url>
+    <content><![CDATA[<h2 id="buuoj-网鼎杯-2018-Fakebook"><a href="#buuoj-网鼎杯-2018-Fakebook" class="headerlink" title="buuoj [网鼎杯 2018]Fakebook"></a>buuoj [网鼎杯 2018]Fakebook</h2><blockquote>
+<ul>
+<li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
+<li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
+<li><h4 id="get的新姿势"><a href="#get的新姿势" class="headerlink" title="get的新姿势"></a>get的新姿势</h4></li>
+</ul>
+</blockquote>
+<a id="more"></a>
+
+<ul>
+<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li>打开一个网站，先注册个账号试试，没什么明显的问题，打开扫描器扫扫。</li>
+<li>扫到一个user.php，发现get函数，猜想可能存在ssrf漏洞，但发现blog变量有严格的过滤。</li>
+<li>进入注册用户的界面，发现有get请求，尝试sql注入。</li>
+<li>sql注入绕过后，泄露了提交过程中的序列化字符串，因此可以构造特定的字符串实现ssrf攻击。</li>
+</ol>
+</li>
+<li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><ol>
+<li>一个破网站，暴力破解试了试没用，只能乖乖的注册一个账号。</li>
+</ol>
+</li>
+</ul>
+]]></content>
+  </entry>
 </search>
