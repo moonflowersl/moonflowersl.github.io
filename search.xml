@@ -738,4 +738,9 @@
 <p>​        PHP反序列化在类名和变量名中间存在一个%00字符，然而这个字符是不显示的，因此在本题中如果先打印出来字符串再手动修改后再base64编码，最后得到的结果和直接操作得到的结果是不同的。</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>web-11</title>
+    <url>/2020/12/31/web-11/</url>
+    <content><![CDATA[]]></content>
+  </entry>
 </search>
