@@ -410,7 +410,7 @@
   <entry>
     <title>buuoj[ZJCTF 2019]NiZhuanSiWei</title>
     <url>/2020/12/22/web-5/</url>
-    <content><![CDATA[<h2 id="buuoj-ZJCTF-2019-NiZhuanSiWei"><a href="#buuoj-ZJCTF-2019-NiZhuanSiWei" class="headerlink" title="buuoj[ZJCTF 2019]NiZhuanSiWei"></a>buuoj[ZJCTF 2019]NiZhuanSiWei</h2><blockquote>
+    <content><![CDATA[<h2 id="web-5-buuoj-ZJCTF-2019-NiZhuanSiWei"><a href="#web-5-buuoj-ZJCTF-2019-NiZhuanSiWei" class="headerlink" title="web-5 buuoj [ZJCTF 2019]NiZhuanSiWei"></a>web-5 buuoj [ZJCTF 2019]NiZhuanSiWei</h2><blockquote>
 <ul>
 <li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
 <li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
@@ -522,7 +522,7 @@
   <entry>
     <title>新生赛web3-混元形意</title>
     <url>/2020/12/24/web-6/</url>
-    <content><![CDATA[<h1 id="新生赛web3-混元形意"><a href="#新生赛web3-混元形意" class="headerlink" title="新生赛web3-混元形意"></a>新生赛web3-混元形意</h1><blockquote>
+    <content><![CDATA[<h1 id="web-6-新生赛web-混元形意"><a href="#web-6-新生赛web-混元形意" class="headerlink" title="web-6 新生赛web-混元形意"></a>web-6 新生赛web-混元形意</h1><blockquote>
 <ul>
 <li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
 <li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
@@ -773,7 +773,7 @@
 
 <p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-10.3.png?raw=true"></p>
 </li>
-<li><p>爆passwo字段，这里只能显示部分，因为substr被过滤，于是用了个骚操作，left和right各取一段然后手动拼起来。</p>
+<li><p>爆password字段，这里只能显示部分，因为substr被过滤，于是用了个骚操作，left和right各取一段然后手动拼起来。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">or(updatexml(1,concat(0x7e,(select(left(password,30))from(H4rDsql)),0x7e),1))%23</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-10.5.png?raw=true"></p>
