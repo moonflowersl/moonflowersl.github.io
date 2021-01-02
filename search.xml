@@ -739,9 +739,45 @@
 ]]></content>
   </entry>
   <entry>
-    <title>web-11</title>
+    <title>web-11 buuoj [GXYCTF2019]BabySQli</title>
     <url>/2020/12/31/web-11/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="web-11-GXYCTF2019-BabySQli"><a href="#web-11-GXYCTF2019-BabySQli" class="headerlink" title="web-11 [GXYCTF2019]BabySQli"></a>web-11 [GXYCTF2019]BabySQli</h1><ul>
+<li><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4></li>
+<li><h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4></li>
+<li><h4 id="get的新姿势"><a href="#get的新姿势" class="headerlink" title="get的新姿势"></a>get的新姿势</h4></li>
+</ul>
+<a id="more"></a>
+
+<ul>
+<li><h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li>有登录框，可能存在sql注入，发现username可以进行注入。</li>
+<li>查看网页源码发现有提示，可经解码得到正确语句。</li>
+<li>判断是先查username再查password，可以利用联合查询的特点来解决。</li>
+</ol>
+</li>
+<li><h3 id="解题过程-1"><a href="#解题过程-1" class="headerlink" title="解题过程"></a>解题过程</h3><ol>
+<li><p>往输入框里随便输点东西，然后查看源码。</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-12.1.png?raw=true"></p>
+</li>
+<li><p>只有大写字母和数字，大概是base家族的编码，实验后是先base32再base64</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-12.2.png?raw=true"></p>
+</li>
+<li><p>先测试注入点。</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-12.3.png?raw=true"></p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-12.4.png?raw=true"></p>
+<p>注入点是第二列，猜测三列对应的是id，username，password。</p>
+</li>
+<li><p>提示说明username和password的验证是分开的，先验证username再验证password，如果都成功就能登录成功，username=admin能猜出来，而password可以利用union select的性质。联合查询不存在的数据时，先会创造一个虚拟的表，此时也会出现一个临时数据，所以如果我们先创造后查询，就可以绕过password的验证了（类似一种欺骗吧）。</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-12.5.png?raw=true"></p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><h3 id="get的新姿势-1"><a href="#get的新姿势-1" class="headerlink" title="get的新姿势"></a>get的新姿势</h3><p>又多了种绕过的奇怪姿势……</p>
+</li>
+</ul>
+]]></content>
   </entry>
   <entry>
     <title>web-10 buuoj [极客大挑战 2019]HardSQL</title>
