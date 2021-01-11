@@ -837,9 +837,9 @@
 <h4 id="堆叠注入："><a href="#堆叠注入：" class="headerlink" title="堆叠注入："></a>堆叠注入：</h4><p>堆叠注入，顾名思义，就是将语句堆叠在一起进行查询<br>原理很简单，mysql_multi_query() 支持多条sql语句同时执行，就是个;分隔，成堆的执行sql语句，例如</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">select * <span class="keyword">from</span> users;show databases; </span><br></pre></td></tr></table></figure>
 
-<p>就同时执行以上两条命令，所以我们可以增删改查，只要权限够<br>虽然这个注入姿势很牛逼，但实际遇到很少，其可能受到API或者数据库引擎，又或者权限的限制只有当调用数据库函数支持执行多条sql语句时才能够使用，利用mysqli_multi_query()函数就支持多条sql语句同时执行，但实际情况中，如PHP为了防止sql注入机制，往往使用调用数据库的函数是mysqli_ query()函数，其只能执行一条语句，分号后面的内容将不会被执行，所以可以说堆叠注入的使用条件十分有限，一旦能够被使用，将可能对网站造成十分大的威胁。（<a href="https://blog.csdn.net/qq_45691294/article/details/107376284">原文</a>）</p>
 <a id="more"></a>
 
+<p>就同时执行以上两条命令，所以我们可以增删改查，只要权限够<br>虽然这个注入姿势很牛逼，但实际遇到很少，其可能受到API或者数据库引擎，又或者权限的限制只有当调用数据库函数支持执行多条sql语句时才能够使用，利用mysqli_multi_query()函数就支持多条sql语句同时执行，但实际情况中，如PHP为了防止sql注入机制，往往使用调用数据库的函数是mysqli_ query()函数，其只能执行一条语句，分号后面的内容将不会被执行，所以可以说堆叠注入的使用条件十分有限，一旦能够被使用，将可能对网站造成十分大的威胁。（<a href="https://blog.csdn.net/qq_45691294/article/details/107376284">原文</a>）</p>
 <ul>
 <li><h3 id="set预编译"><a href="#set预编译" class="headerlink" title="set预编译"></a>set预编译</h3><ul>
 <li><h5 id="预编译："><a href="#预编译：" class="headerlink" title="预编译："></a>预编译：</h5><p>详细介绍见<a href="https://www.cnblogs.com/micrari/p/7112781.html">sql预编译</a>。</p>
@@ -900,7 +900,9 @@
     <url>/2021/01/11/web-14/</url>
     <content><![CDATA[<h1 id="buuoj-安洵杯-2019-easy-web"><a href="#buuoj-安洵杯-2019-easy-web" class="headerlink" title="buuoj [安洵杯 2019]easy_web"></a>buuoj [安洵杯 2019]easy_web</h1><p>这题确实有点搞人心态。。。</p>
 <ul>
-<li><h3 id="先想办法找一下源码"><a href="#先想办法找一下源码" class="headerlink" title="先想办法找一下源码"></a>先想办法找一下源码</h3><ol>
+<li><h3 id="先想办法找一下源码"><a href="#先想办法找一下源码" class="headerlink" title="先想办法找一下源码"></a>先想办法找一下源码</h3><a id="more"></a>
+
+<ol>
 <li><p>注意到img后面的那串字符，有点base64的味道，拿去解码。</p>
 <h5 id="（坑点1：http-ctf-ssleye-com-这个网站的base64解码有bug）"><a href="#（坑点1：http-ctf-ssleye-com-这个网站的base64解码有bug）" class="headerlink" title="（坑点1：http://ctf.ssleye.com/这个网站的base64解码有bug）"></a>（坑点1：<a href="http://ctf.ssleye.com/%E8%BF%99%E4%B8%AA%E7%BD%91%E7%AB%99%E7%9A%84base64%E8%A7%A3%E7%A0%81%E6%9C%89bug%EF%BC%89">http://ctf.ssleye.com/这个网站的base64解码有bug）</a></h5></li>
 <li><p>解码顺序：base64-&gt;base64-&gt;hex 最后解出555.png</p>
@@ -920,6 +922,7 @@
 
 <h5 id="坑点2：原本的get请求改成post时，要加上Content-Type-application-x-www-form-encoded"><a href="#坑点2：原本的get请求改成post时，要加上Content-Type-application-x-www-form-encoded" class="headerlink" title="(坑点2：原本的get请求改成post时，要加上Content-Type: application/x-www-form-encoded)"></a>(坑点2：原本的get请求改成post时，要加上Content-Type: application/x-www-form-encoded)</h5></li>
 <li><p>现在回来看看怎么绕过正则过滤，这里只有|\\|\\\\|过滤，相当于没有过滤\，PHP中\本身表示一次转义，在正则中\又相当于一次转义，所以\\\才表示过滤\（存疑：4个\在正则中或表示一个\）。因此可以用\把cat分隔开，有以下构造：</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-14.1.png?raw=true"></p>
 </li>
 </ol>
 </li>
