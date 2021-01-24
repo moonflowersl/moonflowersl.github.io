@@ -1004,4 +1004,9 @@
 <p>第二个可以先post一个$flag=flag，经过第一个foreach变成了$$flag = flag，在传yds=flag，经过第二个foreach，$$x就是$yds，$y是flag，$$y就是$flag，也就是$flag这个变量了。</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>web-18</title>
+    <url>/2021/01/24/web-18/</url>
+    <content><![CDATA[]]></content>
+  </entry>
 </search>
