@@ -933,6 +933,8 @@
     <title>web-15 buuoj [BUUCTF 2018]Online Tool</title>
     <url>/2021/01/17/web-15/</url>
     <content><![CDATA[<h1 id="buuoj-BUUCTF-2018-Online-Tool"><a href="#buuoj-BUUCTF-2018-Online-Tool" class="headerlink" title="buuoj [BUUCTF 2018]Online Tool"></a>buuoj [BUUCTF 2018]Online Tool</h1><p>开局送上源码的代码审计</p>
+<a id="more"></a>
+
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_SERVER</span>[<span class="string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$_SERVER</span>[<span class="string">&#x27;REMOTE_ADDR&#x27;</span>] = <span class="variable">$_SERVER</span>[<span class="string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;host&#x27;</span>])) &#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable">$host</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;host&#x27;</span>];</span><br><span class="line">    <span class="variable">$host</span> = escapeshellarg(<span class="variable">$host</span>);</span><br><span class="line">    <span class="variable">$host</span> = escapeshellcmd(<span class="variable">$host</span>);</span><br><span class="line">    <span class="variable">$sandbox</span> = md5(<span class="string">&quot;glzjin&quot;</span>. <span class="variable">$_SERVER</span>[<span class="string">&#x27;REMOTE_ADDR&#x27;</span>]);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;you are in sandbox &#x27;</span>.<span class="variable">$sandbox</span>;</span><br><span class="line">    @mkdir(<span class="variable">$sandbox</span>);</span><br><span class="line">    chdir(<span class="variable">$sandbox</span>);</span><br><span class="line">    <span class="keyword">echo</span> system(<span class="string">&quot;nmap -T5 -sT -Pn --host-timeout 2 -F &quot;</span>.<span class="variable">$host</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>第一个if语句做了相关ip的配置，没什么卵用，突破点在这两句：</p>
@@ -964,6 +966,8 @@
     <title>web-16 buuoj [GXYCTF2019]禁止套娃</title>
     <url>/2021/01/17/web-16/</url>
     <content><![CDATA[<h1 id="buuoj-GXYCTF2019-禁止套娃"><a href="#buuoj-GXYCTF2019-禁止套娃" class="headerlink" title="buuoj [GXYCTF2019]禁止套娃"></a>buuoj [GXYCTF2019]禁止套娃</h1><p>打开没什么头绪，先用dirsearch扫一下，发现有git源码泄露，那就用githack搞一下得到源码。</p>
+<a id="more"></a>
+
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;flag.php&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;flag在哪里呢？&lt;br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>]))&#123;</span><br><span class="line">    <span class="keyword">if</span> (!preg_match(<span class="string">&#x27;/data:\/\/|filter:\/\/|php:\/\/|phar:\/\//i&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>])) &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&#x27;;&#x27;</span> === preg_replace(<span class="string">&#x27;/[a-z,_]+\((?R)?\)/&#x27;</span>, <span class="literal">NULL</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>])) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!preg_match(<span class="string">&#x27;/et|na|info|dec|bin|hex|oct|pi|log/i&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>])) &#123;</span><br><span class="line">                <span class="comment">// echo $_GET[&#x27;exp&#x27;];</span></span><br><span class="line">                @<span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">die</span>(<span class="string">&quot;还差一点哦！&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&quot;再好好想想！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;还想读flag，臭弟弟！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// highlight_file(__FILE__);</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>文件包含漏洞，问题就在于绕过三层if的过滤（严重套娃）。</p>
@@ -1005,8 +1009,18 @@
 ]]></content>
   </entry>
   <entry>
-    <title>web-18</title>
+    <title>web-18 buuoj [BJDCTF2020]The mystery of ip</title>
     <url>/2021/01/24/web-18/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="web-18-buuoj-BJDCTF2020-The-mystery-of-ip"><a href="#web-18-buuoj-BJDCTF2020-The-mystery-of-ip" class="headerlink" title="web-18 buuoj [BJDCTF2020]The mystery of ip"></a>web-18 buuoj [BJDCTF2020]The mystery of ip</h1><p>点开网页的Flag选项，然而给了个ip地址，这是不禁要想它是哪来的了。。。。。。</p>
+<p>先抓个包看看，加一个xff头，发现ip地址发生改变</p>
+<a id="more"></a>
+
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-18.1.png?raw=true"></p>
+<p>前端代码可控？？？那这不应该是个XSS（doge），其实是个模板注入（SSTI）</p>
+<p>试试祖传{7*7}</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-18.2.png?raw=true"></p>
+<p>既然这样的话就可以任意命令执行了hhhhhhh</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-18.3.png?raw=true"></p>
+]]></content>
   </entry>
 </search>
