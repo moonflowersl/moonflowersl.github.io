@@ -987,4 +987,21 @@
 
 ]]></content>
   </entry>
+  <entry>
+    <title>web-17 buuoj [BJDCTF2020]Mark loves cat</title>
+    <url>/2021/01/24/web-17/</url>
+    <content><![CDATA[<h1 id="web-17-buuoj-BJDCTF2020-Mark-loves-cat"><a href="#web-17-buuoj-BJDCTF2020-Mark-loves-cat" class="headerlink" title="web-17 buuoj [BJDCTF2020]Mark loves cat"></a>web-17 buuoj [BJDCTF2020]Mark loves cat</h1><p>拿到一个比较完整的网页，根据我的菜鸡直觉可能有个源码泄露</p>
+<p>所以拿个dirsearch扫一下，发现是个git源码泄露，再那githack处理一下，得到源码</p>
+<a id="more"></a>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&#x27;flag.php&#x27;</span>;</span><br><span class="line"><span class="variable">$yds</span> = <span class="string">&quot;dog&quot;</span>;</span><br><span class="line"><span class="variable">$is</span> = <span class="string">&quot;cat&quot;</span>;</span><br><span class="line"><span class="variable">$handsome</span> = <span class="string">&#x27;yds&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_POST</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="variable">$$x</span> = <span class="variable">$y</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_GET</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="variable">$$x</span> = <span class="variable">$$y</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_GET</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="variable">$x</span> &amp;&amp; <span class="variable">$x</span> !== <span class="string">&#x27;flag&#x27;</span>)&#123;	<span class="comment">//GET方式传flag只能传一个flag=flag</span></span><br><span class="line">        <span class="keyword">exit</span>(<span class="variable">$handsome</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>]) &amp;&amp; !<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;flag&#x27;</span>]))&#123;	<span class="comment">//GET和POST其中之一必须传flag</span></span><br><span class="line">    <span class="keyword">exit</span>(<span class="variable">$yds</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="string">&#x27;flag&#x27;</span>  || <span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="string">&#x27;flag&#x27;</span>)&#123;	<span class="comment">//GET和POST传flag,必须不能是flag=flag</span></span><br><span class="line">    <span class="keyword">exit</span>(<span class="variable">$is</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;the flag is: &quot;</span>.<span class="variable">$flag</span>;</span><br></pre></td></tr></table></figure>
+
+<p>显然这是个变量覆盖漏洞</p>
+<p>刚开始一直陷入误区，以为要直接构造，然后执行最后一句，然而$flag只有一个$是无法执行的，只能原封不动地输出一个字符串。</p>
+<p>然而exit中带一个变量的话退出时会进行解析（返回变量所表达的值）</p>
+<p>改变一下思路，看一下那三个if语句</p>
+<p>第一个键名不能又flag，还要flag的键值为flag，显然扯淡</p>
+<p>第二个可以先post一个$flag=flag，经过第一个foreach变成了$$flag = flag，在传yds=flag，经过第二个foreach，$$x就是$yds，$y是flag，$$y就是$flag，也就是$flag这个变量了。</p>
+]]></content>
+  </entry>
 </search>
