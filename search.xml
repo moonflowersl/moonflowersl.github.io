@@ -1066,6 +1066,11 @@
 <a id="more"></a>
 
 <p>先引用大神写的东西来普及一下xml是什么：<a href="https://xz.aliyun.com/t/6887#toc-0">XML</a></p>
+<p>抓包看一下先：</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-20.1.png?raw=true"></p>
+<p>admin和password都是xml包裹的，那就可以尝试一下XXE攻击了</p>
+<p>因为可以引用外部文件，而且可以使用各种协议读取文件，于是就有：</p>
+<p><img src="https://github.com/moonflowersl/moonflowersl.github.io/blob/main/images/web-20.2.png?raw=true"></p>
 ]]></content>
   </entry>
 </search>
